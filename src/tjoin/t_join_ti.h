@@ -12,19 +12,6 @@
 
 namespace join {
 
-/// Implements the TJoin tree similarity join.
-/**
- * Effective Filters and Linear Time Verification for Tree Similarity Joins
- * https://doi.org/10.1109/ICDE.2019.00081
- *
- * First, a tree is converted into a label set. Second, a candidate index is
- * used to retrieve candidates by looking up a node label inverted list and
- * applying the structural filter. Next, the resulting tree pairs, called
- * candidates, have to be verified. Therefore, the Label Guided Mapping upper
- * bound sends candidates to the result set without TED computation. Last,
- * the remaining candidates are verified. Currently best, linear-time Touzet's
- * algorithm should be used.
- */
 template <typename Label, typename VerificationAlgorithm>
 class TJoinTI {
 public:
