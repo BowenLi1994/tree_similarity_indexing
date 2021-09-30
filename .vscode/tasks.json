@@ -7,6 +7,9 @@
 			"command": "/usr/bin/g++",
 			"args": [
 				"-fdiagnostics-color=always",
+				"-I/home/bowen/tree_similarity_indexing/src/node",
+				"-I/home/bowen/tree_similarity_indexing/src/label",
+				"-I/home/bowen/tree_similarity_indexing/src/parser",
 				"-g",
 				"${file}",
 				"-o",
