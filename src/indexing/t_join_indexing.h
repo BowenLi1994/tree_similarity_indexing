@@ -18,7 +18,7 @@ class TJoin_Indexing {
 public:
   TJoin_Indexing();
 
-  void indexing();
+  void indexing(std::string filename,std::vector<node::Node<Label>>& trees_collection);
 
 // //   void execute_join(
 // //       std::vector<node::Node<Label>>& trees_collection,

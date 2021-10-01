@@ -11,7 +11,15 @@ TJoin_Indexing<Label, VerificationAlgorithm>::TJoin_Indexing() {
   il_lookups_ = 0;
 }
 
+template <typename Label, typename VerificationAlgorithm>
+void indexing(std::string filename,std::vector<node::Node<Label>>& trees_collection){
 
+  std::vector<std::pair<int, std::vector<label_set_converter::LabelSetElement>>> sets_collection;
+
+  // Convert trees to sets and get the result.
+  convert_trees_to_sets(trees_collection, sets_collection);
+
+}
 
 // template <typename Label, typename VerificationAlgorithm>
 // void TJoinTI<Label, VerificationAlgorithm>::execute_join(
@@ -21,8 +29,7 @@ TJoin_Indexing<Label, VerificationAlgorithm>::TJoin_Indexing() {
 //     std::vector<join::JoinResultElement>& join_result,
 //     const double distance_threshold) {
 
-//   // Convert trees to sets and get the result.
-//   convert_trees_to_sets(trees_collection, sets_collection);
+
 
 //   // Retrieves candidates from the candidate index.
 //   retrieve_candidates(sets_collection, candidates, distance_threshold);
