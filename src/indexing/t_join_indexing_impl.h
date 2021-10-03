@@ -12,12 +12,32 @@ TJoin_Indexing<Label, VerificationAlgorithm>::TJoin_Indexing() {
 }
 
 template <typename Label, typename VerificationAlgorithm>
-void indexing(std::string filename,std::vector<node::Node<Label>>& trees_collection){
+void TJoin_Indexing<Label, VerificationAlgorithm>::indexing(std::string filename,std::vector<node::Node<Label>>& trees_collection){
 
   std::vector<std::pair<int, std::vector<label_set_converter::LabelSetElement>>> sets_collection;
 
   // Convert trees to sets and get the result.
   convert_trees_to_sets(trees_collection, sets_collection);
+
+
+  for(int i=0;i<trees_collection.size();i++){
+    std::cout<<"set: "<<i<<" size :"<<sets_collection[i].first<<std::endl;
+    
+    for(auto element : sets_collection[i].second){
+      std::cout<<"id: "<<element.id<<std::endl;
+      std::cout<<"weight: "<<element.weight<<std::endl;
+      std::cout<<"weight so far: "<<element.weight_so_far<<std::endl;
+
+      for(auto node: element.struct_vect){
+        std::cout<<"***********************"<<std::endl;
+        std::cout<<"node posterid: "<<node.postorder_id<<std::endl;
+        std::cout<<"left number: "<<node.number_nodes_left<<std::endl;
+        std::cout<<"right number: "<<node.number_nodes_right<<std::endl;
+        std::cout<<"ancestor number : "<<node.number_nodes_ancestor<<std::endl;
+        std::cout<<"descend number :"<<node.number_nodes_descendant<<std::endl;
+      }
+    }
+  }
 
 }
 
@@ -42,7 +62,7 @@ void indexing(std::string filename,std::vector<node::Node<Label>>& trees_collect
 // }
 
 template <typename Label, typename VerificationAlgorithm>
-void TJoinTI<Label, VerificationAlgorithm>::convert_trees_to_sets(
+void TJoin_Indexing<Label, VerificationAlgorithm>::convert_trees_to_sets(
     std::vector<node::Node<Label>>& trees_collection,
     std::vector<std::pair<int, std::vector<label_set_converter::LabelSetElement>>>& sets_collection) {
 

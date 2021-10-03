@@ -26,15 +26,21 @@ public:
 // //       std::vector<std::pair<int, int>>& candidates,
 // //       std::vector<join::JoinResultElement>& join_result,
 // //       const double distance_threshold);
-// //   /// Converts a given collection of trees into a collection of label sets.
-// //   /**
-// //    * \param trees_collection A vector holding an input collection of trees.
-// //    * \return A vector containing the according label sets of the input trees
-// //    *         in trees_collection.
-// //    */
+
+
+  /// Converts a given collection of trees into a collection of label sets.
+  /**
+   * \param trees_collection A vector holding an input collection of trees.
+   * \return A vector containing the according label sets of the input trees
+   *         in trees_collection.
+   */
   void convert_trees_to_sets(
       std::vector<node::Node<Label>>& trees_collection,
       std::vector<std::pair<int, std::vector<label_set_converter::LabelSetElement>>>& sets_collection);
+
+
+
+      
 // //   /// Retrieves candidate pairs from candidate index.
 // //   /**
 // //    * \param trees_collection A vector holding an input collection of trees.
