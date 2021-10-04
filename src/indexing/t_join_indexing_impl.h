@@ -16,28 +16,38 @@ void TJoin_Indexing<Label, VerificationAlgorithm>::indexing(std::string filename
 
   std::vector<std::pair<int, std::vector<label_set_converter::LabelSetElement>>> sets_collection;
 
+  std::ofstream outfile("/home/bowen/dataset/indexing/"+filename+".indexing");
+
   // Convert trees to sets and get the result.
   convert_trees_to_sets(trees_collection, sets_collection);
 
+  for(auto set : sets_collection){
 
-  for(int i=0;i<trees_collection.size();i++){
-    std::cout<<"set: "<<i<<" size :"<<sets_collection[i].first<<std::endl;
-    
-    for(auto element : sets_collection[i].second){
-      std::cout<<"id: "<<element.id<<std::endl;
-      std::cout<<"weight: "<<element.weight<<std::endl;
-      std::cout<<"weight so far: "<<element.weight_so_far<<std::endl;
+    std::string set_string;
+    set_string+="<"+std::to_string(set.first)+">";
 
-      for(auto node: element.struct_vect){
-        std::cout<<"***********************"<<std::endl;
-        std::cout<<"node posterid: "<<node.postorder_id<<std::endl;
-        std::cout<<"left number: "<<node.number_nodes_left<<std::endl;
-        std::cout<<"right number: "<<node.number_nodes_right<<std::endl;
-        std::cout<<"ancestor number : "<<node.number_nodes_ancestor<<std::endl;
-        std::cout<<"descend number :"<<node.number_nodes_descendant<<std::endl;
+    for(auto element : set.second){
+      set_string+="[";
+      set_string+=std::to_string(element.id)+",";
+      set_string+=std::to_string(element.weight)+",";
+      set_string+=std::to_string(element.weight_so_far);
+      for(auto node: element.struct_vect){     
+        set_string+="{";
+        set_string+=std::to_string(node.postorder_id)+",";
+        set_string+=std::to_string(node.number_nodes_ancestor)+",";
+        set_string+=std::to_string(node.number_nodes_descendant)+",";
+        set_string+=std::to_string(node.number_nodes_left)+",";
+        set_string+=std::to_string(node.number_nodes_right);
+        set_string+="}";
       }
+      set_string+="]";
     }
+
+    //std::cout<<set_string<<std::endl;
+    outfile<<set_string<<"\n";
+
   }
+
 
 }
 

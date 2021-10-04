@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <functional>
+#include <fstream>
 
 #include "join_result_element.h"
 #include "node.h"

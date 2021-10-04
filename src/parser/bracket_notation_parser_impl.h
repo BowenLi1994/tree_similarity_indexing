@@ -92,8 +92,11 @@ void BracketNotationParser::parse_collection(
   }
   // Read the trees line by line, parse, and move into the container.
   std::string tree_string;
+  int tree_count=0;
   while (std::getline(trees_file, tree_string)) {
+    std::cout<<"tree: "<<tree_count<<std::endl;
     trees_collection.push_back(parse_single(tree_string)); // -> This invokes a move constructor (due to push_back(<rvalue>)).
+    tree_count++;
   }
   trees_file.close();
 }

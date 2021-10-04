@@ -17,6 +17,7 @@
 				"-I/home/bowen/tree_similarity_indexing/src/ted",
 				"-I/home/bowen/tree_similarity_indexing/src/data_structures",
 				"-I/home/bowen/tree_similarity_indexing/src/indexing",
+				"-I/home/bowen/tree_similarity_indexing/src/process_bar",
 				"-g",
 				"${file}",
 				"-o",
