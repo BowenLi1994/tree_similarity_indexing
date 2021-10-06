@@ -51,43 +51,27 @@ void TJoin_Indexing<Label, VerificationAlgorithm>::indexing(std::string filename
 
 }
 
+
+
 template <typename Label, typename VerificationAlgorithm>
-void TJoin_Indexing<Label, VerificationAlgorithm>::reading(
-std::string filename, 
-std::vector<std::pair<int, std::vector<label_set_converter::LabelSetElement>>>& sets_collection){
-
-  std::ifstream index_file("/home/bowen/dataset/indexing/"+filename+".indexing");
-
-  std::string index_string;
-  // while(std::getline(index_file,index_string){
+void TJoin_Indexing<Label, VerificationAlgorithm>::execute_join(
+    std::vector<node::Node<Label>>& trees_collection,
+    std::vector<std::pair<int, std::vector<label_set_converter::LabelSetElement>>>& sets_collection,
+    std::vector<std::pair<int, int>>& candidates,
+    std::vector<join::JoinResultElement>& join_result,
+    const double distance_threshold) {
 
 
 
-  // }
+  // Retrieves candidates from the candidate index.
+  retrieve_candidates(sets_collection, candidates, distance_threshold);
 
+  // Use the label guided mapping upper bound to send candidates immediately .
+  upperbound(trees_collection, candidates, join_result, distance_threshold);
 
+  // Verify all computed join candidates and return the join result.
+  verify_candidates(trees_collection, candidates, join_result, distance_threshold);
 }
-
-
-// template <typename Label, typename VerificationAlgorithm>
-// void TJoinTI<Label, VerificationAlgorithm>::execute_join(
-//     std::vector<node::Node<Label>>& trees_collection,
-//     std::vector<std::pair<int, std::vector<label_set_converter::LabelSetElement>>>& sets_collection,
-//     std::vector<std::pair<int, int>>& candidates,
-//     std::vector<join::JoinResultElement>& join_result,
-//     const double distance_threshold) {
-
-
-
-//   // Retrieves candidates from the candidate index.
-//   retrieve_candidates(sets_collection, candidates, distance_threshold);
-
-//   // Use the label guided mapping upper bound to send candidates immediately .
-//   upperbound(trees_collection, candidates, join_result, distance_threshold);
-
-//   // Verify all computed join candidates and return the join result.
-//   verify_candidates(trees_collection, candidates, join_result, distance_threshold);
-// }
 
 template <typename Label, typename VerificationAlgorithm>
 void TJoin_Indexing<Label, VerificationAlgorithm>::convert_trees_to_sets(

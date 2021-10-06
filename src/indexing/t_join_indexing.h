@@ -21,18 +21,16 @@ public:
 
   void indexing(std::string filename,std::vector<node::Node<Label>>& trees_collection);
 
-  void reading(std::string filename, std::vector<std::pair<int, 
-               std::vector<label_set_converter::LabelSetElement>>>& sets_collection);
 
   
 
 
-// //   void execute_join(
-// //       std::vector<node::Node<Label>>& trees_collection,
-// //       std::vector<std::pair<int, std::vector<label_set_converter::LabelSetElement>>>& sets_collection,
-// //       std::vector<std::pair<int, int>>& candidates,
-// //       std::vector<join::JoinResultElement>& join_result,
-// //       const double distance_threshold);
+  void execute_join(
+      std::vector<node::Node<Label>>& trees_collection,
+      std::vector<std::pair<int, std::vector<label_set_converter::LabelSetElement>>>& sets_collection,
+      std::vector<std::pair<int, int>>& candidates,
+      std::vector<join::JoinResultElement>& join_result,
+      const double distance_threshold);
 
 
   /// Converts a given collection of trees into a collection of label sets.
@@ -48,19 +46,21 @@ public:
 
 
       
-// //   /// Retrieves candidate pairs from candidate index.
-// //   /**
-// //    * \param trees_collection A vector holding an input collection of trees.
-// //    * \param candidates A vector of candidate tree pairs.
-// //    * \param distance_threshold The maximum number of edit operations that
-// //    *                           differs two trees in the join's result set.
-// //    * \return A vector containing pairs of trees ids (candidates) that are 
-// //    *         considered candidates.
-// //    */
-// //   void retrieve_candidates(
-// //       std::vector<std::pair<int, std::vector<label_set_converter::LabelSetElement>>>& sets_collection,
-// //       std::vector<std::pair<int, int>>& candidates,
-// //       const double distance_threshold);
+  // Retrieves candidate pairs from candidate index.
+  /**
+   * \param trees_collection A vector holding an input collection of trees.
+   * \param candidates A vector of candidate tree pairs.
+   * \param distance_threshold The maximum number of edit operations that
+   *                           differs two trees in the join's result set.
+   * \return A vector containing pairs of trees ids (candidates) that are 
+   *         considered candidates.
+   */
+  void retrieve_candidates(
+      std::vector<std::pair<int, std::vector<label_set_converter::LabelSetElement>>>& sets_collection,
+      std::vector<std::pair<int, int>>& candidates,
+      const double distance_threshold);
+
+      
 // //   /// Verifies candidates using Label Guided Mapping upper bound (LGM).
 // //   /**
 // //    * \param trees_collection A vector holding an input collection of trees.
