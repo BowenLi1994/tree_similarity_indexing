@@ -21,6 +21,12 @@ public:
 
   void indexing(std::string filename,std::vector<node::Node<Label>>& trees_collection);
 
+  void reading(std::string filename, std::vector<std::pair<int, 
+               std::vector<label_set_converter::LabelSetElement>>>& sets_collection);
+
+  
+
+
 // //   void execute_join(
 // //       std::vector<node::Node<Label>>& trees_collection,
 // //       std::vector<std::pair<int, std::vector<label_set_converter::LabelSetElement>>>& sets_collection,

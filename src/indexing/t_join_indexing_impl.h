@@ -51,6 +51,24 @@ void TJoin_Indexing<Label, VerificationAlgorithm>::indexing(std::string filename
 
 }
 
+template <typename Label, typename VerificationAlgorithm>
+void TJoin_Indexing<Label, VerificationAlgorithm>::reading(
+std::string filename, 
+std::vector<std::pair<int, std::vector<label_set_converter::LabelSetElement>>>& sets_collection){
+
+  std::ifstream index_file("/home/bowen/dataset/indexing/"+filename+".indexing");
+
+  std::string index_string;
+  // while(std::getline(index_file,index_string){
+
+
+
+  // }
+
+
+}
+
+
 // template <typename Label, typename VerificationAlgorithm>
 // void TJoinTI<Label, VerificationAlgorithm>::execute_join(
 //     std::vector<node::Node<Label>>& trees_collection,

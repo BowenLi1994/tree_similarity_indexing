@@ -26,6 +26,8 @@
 
 #pragma once
 
+using namespace parser;
+
 /// This is currently a copy of the previous version but with the efficient
 /// tokanization.
 node::Node<BracketNotationParser::Label> BracketNotationParser::parse_single(
