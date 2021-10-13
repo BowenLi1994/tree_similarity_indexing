@@ -42,7 +42,7 @@ int main(int, char** argv) {
 
 
 
-    int set_counter=0;
+    // int set_counter=0;
     // for(auto set: sets_collection){
 
     //     std::cout<<"set---> tree_size: "<<set.first<<std::endl;
