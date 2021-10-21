@@ -84,6 +84,360 @@ void TJoin_Indexing<Label, VerificationAlgorithm>::convert_trees_to_sets(
   number_of_labels_ = lsc.get_number_of_labels();
 }
 
+template <typename Label, typename VerificationAlgorithm>
+void TJoin_Indexing<Label, VerificationAlgorithm>::feature_indexing(
+  std::string filename, 
+  std::vector<node::Node<Label>>& trees_collection){
+  
+  int tree_counter=0;
+
+  for(auto& tree : trees_collection){
+
+    std::cout<<"tree: "<<tree_counter<<std::endl;
+    tree_counter++;
+    
+    int preorder=0;
+    int postorder=0;
+
+    //std::cout<<"postorder"<<std::endl;
+    std::vector<node::Node<Label>*> tree_postorder_collection;
+
+    postordering(tree,postorder, tree_postorder_collection);
+    preordering (tree,preorder);
+
+
+    for(int i=0;i<tree_postorder_collection.size();i++){
+
+
+      int counter=0;
+      while(counter<i){
+        //std::cout<<"node with fewer post order"<<std::endl;
+        //with a node x, for the other nodes x', preorder: x' < x, postorder: x' < x, x' is left to x
+        if(tree_postorder_collection[counter]->pre_order < tree_postorder_collection[i]->pre_order){
+
+          int degree=tree_postorder_collection[counter]->children_.size();
+          int leaf_dist=tree_postorder_collection[counter]->leaf_dist;
+          std::string label=tree_postorder_collection[counter]->label().to_string();
+
+          //degree histogram
+          if(tree_postorder_collection[i]->degree_histogram[2][degree]!=-1){
+            tree_postorder_collection[i]->degree_histogram[2][degree]++;
+          }
+          else
+            tree_postorder_collection[i]->degree_histogram[2][degree]=1;
+
+          
+          //leaf_dist histogram
+          if(tree_postorder_collection[i]->leaf_histogram[2][leaf_dist]!=-1){
+            tree_postorder_collection[i]->leaf_histogram[2][leaf_dist]++;
+          }
+          else
+            tree_postorder_collection[i]->leaf_histogram[2][leaf_dist]=1;
+
+          //label histogram
+          if(tree_postorder_collection[i]->label_histogram[2][label]!=-1){
+            tree_postorder_collection[i]->label_histogram[2][label]++;
+          }
+          else
+            tree_postorder_collection[i]->label_histogram[2][label]=1;      
+        }
+         //with a node x, for the other nodes x', preorder: x' > x, postorder: x' < x, x' is  down to x
+        else{
+
+          int degree=tree_postorder_collection[counter]->children_.size();
+          int leaf_dist=tree_postorder_collection[counter]->leaf_dist;
+          std::string label=tree_postorder_collection[counter]->label().to_string();
+
+          //degree histogram
+          if(tree_postorder_collection[i]->degree_histogram[1][degree]!=-1){
+            tree_postorder_collection[i]->degree_histogram[1][degree]++;
+          }
+          else
+            tree_postorder_collection[i]->degree_histogram[1][degree]=1;
+
+          
+          //leaf_dist histogram
+          if(tree_postorder_collection[i]->leaf_histogram[1][leaf_dist]!=-1){
+            tree_postorder_collection[i]->leaf_histogram[1][leaf_dist]++;
+          }
+          else
+            tree_postorder_collection[i]->leaf_histogram[1][leaf_dist]=1;
+
+          //label histogram
+          if(tree_postorder_collection[i]->label_histogram[1][label]!=-1){
+            tree_postorder_collection[i]->label_histogram[1][label]++;
+          }
+          else
+            tree_postorder_collection[i]->label_histogram[1][label]=1;  
+
+        }
+
+
+        counter++;
+     }
+
+      counter=tree_postorder_collection.size()-1;
+      //std::cout<<counter<<std::endl;
+      while(counter > i){
+
+         //std::cout<<"node with fewer post order"<<std::endl;
+         //with a node x, for the other nodes x', preorder: x' < x, postorder: x' > x, x' is on to x
+        if(tree_postorder_collection[counter]->pre_order < tree_postorder_collection[i]->pre_order){
+
+          int degree=tree_postorder_collection[counter]->children_.size();
+          int leaf_dist=tree_postorder_collection[counter]->leaf_dist;
+          std::string label=tree_postorder_collection[counter]->label().to_string();
+
+          //degree histogram
+          if(tree_postorder_collection[i]->degree_histogram[0][degree]!=-1){
+            tree_postorder_collection[i]->degree_histogram[0][degree]++;
+          }
+          else
+            tree_postorder_collection[i]->degree_histogram[0][degree]=1;
+
+          
+          //leaf_dist histogram
+          if(tree_postorder_collection[i]->leaf_histogram[0][leaf_dist]!=-1){
+            tree_postorder_collection[i]->leaf_histogram[0][leaf_dist]++;
+          }
+          else
+            tree_postorder_collection[i]->leaf_histogram[0][leaf_dist]=1;
+
+          //label histogram
+          if(tree_postorder_collection[i]->label_histogram[0][label]!=-1){
+            tree_postorder_collection[i]->label_histogram[0][label]++;
+          }
+          else
+            tree_postorder_collection[i]->label_histogram[0][label]=1;      
+        }
+
+        //with a node x, for the other nodes x', preorder: x' > x, postorder: x' > x, x' is on to x
+        else{
+          int degree=tree_postorder_collection[counter]->children_.size();
+          int leaf_dist=tree_postorder_collection[counter]->leaf_dist;
+          std::string label=tree_postorder_collection[counter]->label().to_string();
+
+          //degree histogram
+          if(tree_postorder_collection[i]->degree_histogram[3][degree]!=-1){
+            tree_postorder_collection[i]->degree_histogram[3][degree]++;
+          }
+          else
+            tree_postorder_collection[i]->degree_histogram[3][degree]=1;
+
+          
+          //leaf_dist histogram
+          if(tree_postorder_collection[i]->leaf_histogram[3][leaf_dist]!=-1){
+            tree_postorder_collection[i]->leaf_histogram[3][leaf_dist]++;
+          }
+          else
+            tree_postorder_collection[i]->leaf_histogram[3][leaf_dist]=1;
+
+          //label histogram
+          if(tree_postorder_collection[i]->label_histogram[3][label]!=-1){
+            tree_postorder_collection[i]->label_histogram[3][label]++;
+          }
+          else
+            tree_postorder_collection[i]->label_histogram[3][label]=1;  
+
+        }
+        counter--;
+      }
+
+
+
+    }
+
+  }
+  
+  std::vector<std::pair<int, std::vector<label_feature_set_converter::LabelSetElement>>> sets_collection;
+  convert_trees_to_feature_sets(trees_collection,sets_collection);
+
+  std::ofstream label_outfile("/home/bowen/dataset/indexing/"+filename+".label_indexing");
+  std::ofstream degree_outfile("/home/bowen/dataset/indexing/"+filename+".degree_indexing");
+  std::ofstream leaf_outfile("/home/bowen/dataset/indexing/"+filename+".leaf_indexing");
+
+  for(auto set : sets_collection){
+
+    std::string set_string;
+    set_string+="<"+std::to_string(set.first)+">";
+
+    for(auto element : set.second){
+      set_string+="[";
+      set_string+=std::to_string(element.id)+",";
+      set_string+=std::to_string(element.weight)+",";
+      set_string+=std::to_string(element.weight_so_far);
+      for(auto node: element.struct_vect){     
+        set_string+="{";
+        set_string+=std::to_string(node.postorder_id)+",";
+        set_string+=std::to_string(node.number_nodes_ancestor)+",";
+        set_string+=std::to_string(node.number_nodes_descendant)+",";
+        set_string+=std::to_string(node.number_nodes_left)+",";
+        set_string+=std::to_string(node.number_nodes_right);
+        
+        for(size_t i=0;i<4;i++){
+          set_string+="<";
+          for(auto map: node.label_histogram[i]){
+            set_string+="(";
+            set_string+=map.first+","+std::to_string(map.second);
+            set_string+=")";
+          }
+
+          set_string+=">";
+        }
+        
+        set_string+="}";
+      }
+      set_string+="]";
+    }
+
+    //std::cout<<set_string<<std::endl;
+    label_outfile<<set_string<<"\n";
+
+  }
+
+
+  for(auto set : sets_collection){
+
+    std::string set_string;
+    set_string+="<"+std::to_string(set.first)+">";
+
+    for(auto element : set.second){
+      set_string+="[";
+      set_string+=std::to_string(element.id)+",";
+      set_string+=std::to_string(element.weight)+",";
+      set_string+=std::to_string(element.weight_so_far);
+      for(auto node: element.struct_vect){     
+        set_string+="{";
+        set_string+=std::to_string(node.postorder_id)+",";
+        set_string+=std::to_string(node.number_nodes_ancestor)+",";
+        set_string+=std::to_string(node.number_nodes_descendant)+",";
+        set_string+=std::to_string(node.number_nodes_left)+",";
+        set_string+=std::to_string(node.number_nodes_right);
+        
+        for(size_t i=0;i<4;i++){
+          set_string+="<";
+          for(auto map: node.degree_histogram[i]){
+            set_string+="(";
+            set_string+=std::to_string(map.first)+","+std::to_string(map.second);
+            set_string+=")";
+          }
+
+          set_string+=">";
+        }
+        
+        set_string+="}";
+      }
+      set_string+="]";
+    }
+
+    //std::cout<<set_string<<std::endl;
+    degree_outfile<<set_string<<"\n";
+
+  }
+
+  for(auto set : sets_collection){
+
+    std::string set_string;
+    set_string+="<"+std::to_string(set.first)+">";
+
+    for(auto element : set.second){
+      set_string+="[";
+      set_string+=std::to_string(element.id)+",";
+      set_string+=std::to_string(element.weight)+",";
+      set_string+=std::to_string(element.weight_so_far);
+      for(auto node: element.struct_vect){     
+        set_string+="{";
+        set_string+=std::to_string(node.postorder_id)+",";
+        set_string+=std::to_string(node.number_nodes_ancestor)+",";
+        set_string+=std::to_string(node.number_nodes_descendant)+",";
+        set_string+=std::to_string(node.number_nodes_left)+",";
+        set_string+=std::to_string(node.number_nodes_right);
+        
+        for(size_t i=0;i<4;i++){
+          set_string+="<";
+          for(auto map: node.leaf_histogram[i]){
+            set_string+="(";
+            set_string+=std::to_string(map.first)+","+std::to_string(map.second);
+            set_string+=")";
+          }
+
+          set_string+=">";
+        }
+        
+        set_string+="}";
+      }
+      set_string+="]";
+    }
+
+    //std::cout<<set_string<<std::endl;
+    leaf_outfile<<set_string<<"\n";
+
+  }
+  
+
+
+
+
+
+
+
+
+
+}
+
+
+template <typename Label, typename VerificationAlgorithm>
+void TJoin_Indexing<Label, VerificationAlgorithm>::postordering(
+  node::Node<Label>& tree, int& order,
+  std::vector<node::Node<Label>*>& tree_postorder_collection){
+
+  for(auto& child: tree.children_){
+    postordering(child,order,tree_postorder_collection);
+  }
+
+  tree.post_order=order;
+  tree_postorder_collection.push_back(&tree);
+  order++;
+
+  if(tree.is_leaf()){
+    tree.leaf_dist=0;
+  }
+  else{
+    int max=-1;
+    for(auto child: tree.children_){
+      if(child.leaf_dist>max)
+        max=child.leaf_dist;
+    }
+
+    tree.leaf_dist=max+1;
+  }
+}
+
+template <typename Label, typename VerificationAlgorithm>
+void TJoin_Indexing<Label, VerificationAlgorithm>::preordering(
+  node::Node<Label>& tree, int& order){
+
+  tree.pre_order=order;
+  order++;
+
+  for(auto& child: tree.children_){
+    preordering(child,order);
+  }
+}
+
+
+template <typename Label, typename VerificationAlgorithm>
+void TJoin_Indexing<Label, VerificationAlgorithm>::convert_trees_to_feature_sets(
+    std::vector<node::Node<Label>>& trees_collection,
+    std::vector<std::pair<int, std::vector<label_feature_set_converter::LabelSetElement>>>& sets_collection) {
+
+  // Convert trees to sets and get the result.
+  label_feature_set_converter::Converter<Label> lfsc;
+  lfsc.assignFrequencyIdentifiers(trees_collection,sets_collection);
+  number_of_labels_=lfsc.get_number_of_labels();
+  // number_of_labels_ = lsc.get_number_of_labels();
+}
+
 // template <typename Label, typename VerificationAlgorithm>
 // void TJoinTI<Label, VerificationAlgorithm>::retrieve_candidates(
 //     std::vector<std::pair<int, std::vector<label_set_converter::LabelSetElement>>>& sets_collection,

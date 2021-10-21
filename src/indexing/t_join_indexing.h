@@ -11,6 +11,8 @@
 #include "candidate_index.h"
 #include "label_set_converter.h"
 #include "label_set_element.h"
+#include "label_feature_set_element.h"
+#include "label_feature_set_converter.h"
 
 namespace join {
 
@@ -20,6 +22,15 @@ public:
   TJoin_Indexing();
 
   void indexing(std::string filename,std::vector<node::Node<Label>>& trees_collection);
+
+  void feature_indexing(std::string filename, std::vector<node::Node<Label>>& trees_collection);
+
+  void postordering(node::Node<Label>& tree, int& order,std::vector<node::Node<Label>*>& tree_postorder_collection);
+
+  void preordering(node::Node<Label>& tree, int& order);
+
+
+
 
 
   
@@ -42,6 +53,11 @@ public:
   void convert_trees_to_sets(
       std::vector<node::Node<Label>>& trees_collection,
       std::vector<std::pair<int, std::vector<label_set_converter::LabelSetElement>>>& sets_collection);
+
+  
+  void convert_trees_to_feature_sets(
+      std::vector<node::Node<Label>>& trees_collection,
+      std::vector<std::pair<int, std::vector<label_feature_set_converter::LabelSetElement>>>& sets_collection);
 
 
 

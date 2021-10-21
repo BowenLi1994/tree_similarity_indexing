@@ -10,5 +10,9 @@ indexing:
 	$(CC) $(CFLAGS) $(CXXFLAGS) indexing_test.cpp
 	$(CC) -o indexing_test *.o 
 
+feature_indexing:
+	$(CC) $(CFLAGS) $(CXXFLAGS) feature_indexing.cpp
+	$(CC) -o feature_indexing *.o 
+
 clean:
-	rm -f ./*.o indexing_test
+	rm -f ./*.o indexing_test feature_indexing

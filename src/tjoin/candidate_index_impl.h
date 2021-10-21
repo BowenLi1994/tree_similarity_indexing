@@ -53,7 +53,7 @@ void CandidateIndex::lookup(
     // iterate through probing prefix elements and extend the candidate set
     p = 0;
     // until tau + 1 nodes of the probing set are processed
-    std::cout<<"probing t he tau +1 nodes"<<std::endl;
+    std::cout<<"probing the tau +1 nodes"<<std::endl;
     while(p < r.size()) {
       // remove all entries in the inverted list index up to the position where 
       // the size is greater than the lower bound
@@ -210,8 +210,8 @@ int CandidateIndex::structural_mapping(
   
   std::cout<<"strucural mapping"<<std::endl;
 
-  std::cout<<" set in tree T: "<<sv_r.id<<std::endl;
-  std::cout<<" set in tree T': "<<sv_s.id<<std::endl;
+  // std::cout<<" set in tree T: "<<sv_r.id<<std::endl;
+  // std::cout<<" set in tree T': "<<sv_s.id<<std::endl;
   int tau_valid = 0;
   // check if duplicates exist
   if(sv_s.weight == 1 && sv_r.weight == 1) {

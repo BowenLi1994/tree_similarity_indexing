@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <string>
+#include <unordered_map>
 
 namespace node {
 
@@ -63,13 +64,25 @@ public:
   /// \return True if this node is leaf, false otherwise.
   bool is_leaf() const;
 
+
+  int pre_order;
+  int post_order;
+
+  std::unordered_map<std::string, int> label_histogram[4];
+  std::unordered_map<int,int> leaf_histogram[4];
+  std::unordered_map<int,int> degree_histogram[4];
+  std::vector<Node<Label>> children_;
+  int leaf_dist;
+
 // Member variables
 private:
   /// All children of this node.
-  std::vector<Node<Label>> children_;
+  
 
   /// Data representing the label of this node. Only this Node object owns it.
   Label label_;
+
+
 };
 
 // Implementation details
