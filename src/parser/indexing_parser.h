@@ -7,6 +7,7 @@
 #include <regex>
 
 #include "label_set_element.h"
+#include "label_feature_set_element.h"
 
 namespace parser {
 
@@ -23,6 +24,21 @@ void parse_single(const std::string& index_string, std::pair<int,std::vector<lab
 void parse_collection(
     std::vector<std::pair<int,std::vector<label_set_converter::LabelSetElement>>> sets_collection,
     const std::string& file_path);
+
+void parse_single_feature(
+    const std::string& index_string, 
+    std::pair<int,std::vector<label_feature_set_converter::LabelSetElement>>& set,
+    int flag);
+
+void parse_single_feature_inserted(
+    const std::string& index_string, 
+    std::pair<int,std::vector<label_feature_set_converter::LabelSetElement>>& set,
+    int flag);
+
+
+void parse_collection_feature(
+    std::vector<std::pair<int,std::vector<label_feature_set_converter::LabelSetElement>>>& sets_collection,
+    const std::string& file_name,const std::string& flag);
 
 //   /// Generates the tokens for the input string.
 //   ///

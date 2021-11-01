@@ -59,10 +59,12 @@ struct LabelSetElement {
   int weight = 0;
   /// Weight of a token.
   int weight_so_far = 0;
+  // inserted flag
+  bool is_inserted= false;
   /// Overlap so far for a specific set.
   std::vector<label_feature_set_converter::StructuralVector> struct_vect;
-  /// Constructor.
-  // LabelSetElement();
+  // Constructor.
+  //LabelSetElement();
   // /// Constructor.
   // LabelSetElement(int id, int weight);
   // /// Constructor.

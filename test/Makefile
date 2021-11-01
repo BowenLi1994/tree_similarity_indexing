@@ -14,5 +14,9 @@ feature_indexing:
 	$(CC) $(CFLAGS) $(CXXFLAGS) feature_indexing.cpp
 	$(CC) -o feature_indexing *.o 
 
+resize:
+	$(CC) $(CFLAGS) $(CXXFLAGS) resize.cpp
+	$(CC) -o resize *.o 	
+
 clean:
-	rm -f ./*.o indexing_test feature_indexing
+	rm -f ./*.o indexing_test feature_indexing resize
