@@ -10,13 +10,25 @@ indexing:
 	$(CC) $(CFLAGS) $(CXXFLAGS) indexing_test.cpp
 	$(CC) -o indexing_test *.o 
 
+indexing_join:
+	$(CC) $(CFLAGS) $(CXXFLAGS) indexing_join.cpp
+	$(CC) -o indexing_join *.o 
+
 feature_indexing:
 	$(CC) $(CFLAGS) $(CXXFLAGS) feature_indexing.cpp
 	$(CC) -o feature_indexing *.o 
 
 resize:
 	$(CC) $(CFLAGS) $(CXXFLAGS) resize.cpp
-	$(CC) -o resize *.o 	
+	$(CC) -o resize *.o 
+
+feature_join:
+	$(CC) $(CFLAGS) $(CXXFLAGS) feature_join.cpp
+	$(CC) -o feature_join *.o 
+
+tjoin_test:
+	$(CC) $(CFLAGS) $(CXXFLAGS) tjoin_test.cpp
+	$(CC) -o tjoin_test *.o 		
 
 clean:
-	rm -f ./*.o indexing_test feature_indexing resize
+	rm -f ./*.o indexing_test feature_indexing resize feature_join indexing_join tjoin_test

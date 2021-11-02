@@ -18,15 +18,51 @@
 
 int main(int, char** argv){
 
+    std::string filename(argv[1]);
 
-    std::string index_string="<44>[308,1,1{4,0,3,20,0}{6,1,21,13,4}][585,1,2{1,3,0,0,0}][590,1,3{3,1,2,0,0}][592,1,4{2,2,1,0,0}]";
-   
+
+    // Type aliases.
+    using Label = label::StringLabel;
+    using CostModel = cost_model::UnitCostModelLD<Label>;
+    using LabelDictionary = label::LabelDictionary<Label>;
+
+    // Initialise label dictionary - separate dictionary for each test tree becuse it is easier to keep track of label ids.
+    LabelDictionary ld;
+  
+    // Initialise cost model.
+    CostModel ucm(ld);
+
+    
+    std::vector<node::Node<Label>> trees_collection;
+
+    // Parse the dataset.
+    parser::BracketNotationParser bnp;
+    bnp.parse_collection(trees_collection, "/home/bowen/dataset/tree/"+filename+"_sorted.bracket");
 
     std::vector<std::pair<int,std::vector<label_set_converter::LabelSetElement>>> sets_collection;
-    std::string file_path="/home/bowen/dataset/indexing/sentiment.indexing";
-    parser::IndexingParser ip;
 
-    ip.parse_collection(sets_collection,file_path);
+    //Parse the feature indexing
+
+    parser::IndexingParser ip;
+    ip.parse_collection(sets_collection,"/home/bowen/dataset/indexing/"+filename+".indexing");
+
+    //std::cout<<"sets: "<< sets_collection.size()<<std::endl;
+
+    std::vector<std::pair<int, int>> candidates;
+    std::vector<join::JoinResultElement> join_result;
+    join::TJoin_Indexing<Label,ted::TouzetBaselineTreeIndex<CostModel>> ted_indexing_join_algorithm;
+
+
+    ted_indexing_join_algorithm.number_of_labels_=std::atoi(argv[2]);
+    
+    int threshold = std::atoi(argv[3]);
+
+    ted_indexing_join_algorithm.execute_join(trees_collection,sets_collection,candidates,join_result,(double)threshold);
+
+    std::cout<<"join result: "<<join_result.size()<<std::endl;
+    
+
+
 
     
 

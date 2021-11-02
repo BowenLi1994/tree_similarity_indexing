@@ -98,7 +98,7 @@ void IndexingParser::parse_single(
 
 
 void  IndexingParser::parse_collection(
-    std::vector<std::pair<int,std::vector<label_set_converter::LabelSetElement>>> sets_collection,
+    std::vector<std::pair<int,std::vector<label_set_converter::LabelSetElement>>>& sets_collection,
     const std::string& file_path){
 
     std::ifstream index_file(file_path);
@@ -107,13 +107,13 @@ void  IndexingParser::parse_collection(
     }
   // Read the trees line by line, parse, and move into the container.
   std::string indexing_string;
-  int set_count=0;
+  //int set_count=0;
   while (std::getline(index_file, indexing_string)) {
-    std::cout<<"set: "<<set_count<<std::endl;
+    //std::cout<<"set: "<<set_count<<std::endl;
     std::pair<int,std::vector<label_set_converter::LabelSetElement>> set;
     parse_single(indexing_string,set);
     sets_collection.push_back(set); // -> This invokes a move constructor (due to push_back(<rvalue>)).
-    set_count++;
+    //set_count++;
   }
   index_file.close();
 

@@ -22,7 +22,7 @@ void parse_single(const std::string& index_string, std::pair<int,std::vector<lab
 
   
 void parse_collection(
-    std::vector<std::pair<int,std::vector<label_set_converter::LabelSetElement>>> sets_collection,
+    std::vector<std::pair<int,std::vector<label_set_converter::LabelSetElement>>>& sets_collection,
     const std::string& file_path);
 
 void parse_single_feature(

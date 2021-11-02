@@ -41,6 +41,7 @@ void TJoinTI<Label, VerificationAlgorithm>::convert_trees_to_sets(
   label_set_converter::Converter<Label> lsc;
   lsc.assignFrequencyIdentifiers(trees_collection, sets_collection);
   number_of_labels_ = lsc.get_number_of_labels();
+  //std::cout<<"number of labels: "<<number_of_labels_<<std::endl; 
 }
 
 template <typename Label, typename VerificationAlgorithm>
