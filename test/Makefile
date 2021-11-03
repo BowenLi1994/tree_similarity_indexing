@@ -8,11 +8,12 @@ CXXFLAGS=-c  $(Debug_Level) -std=c++17  -Wall
 
 indexing:
 	$(CC) $(CFLAGS) $(CXXFLAGS) indexing_test.cpp
-	$(CC) -o indexing_test *.o 
+	$(CC) -o indexing_test indexing_test.o 
 
 indexing_join:
 	$(CC) $(CFLAGS) $(CXXFLAGS) indexing_join.cpp
-	$(CC) -o indexing_join *.o 
+	$(CC) -o indexing_join indexing_join.o
+	rm indexing_join.o 
 
 feature_indexing:
 	$(CC) $(CFLAGS) $(CXXFLAGS) feature_indexing.cpp
@@ -28,7 +29,8 @@ feature_join:
 
 tjoin_test:
 	$(CC) $(CFLAGS) $(CXXFLAGS) tjoin_test.cpp
-	$(CC) -o tjoin_test *.o 		
+	$(CC) -o tjoin_test tjoin_test.o
+	rm tjoin_test.o 		
 
 clean:
 	rm -f ./*.o indexing_test feature_indexing resize feature_join indexing_join tjoin_test

@@ -9,6 +9,7 @@
 #include "node.h"
 #include "lgm_tree_index.h"
 #include "candidate_index.h"
+#include "feature_candidate_index.h"
 #include "label_set_converter.h"
 #include "label_set_element.h"
 #include "label_feature_set_element.h"
@@ -30,6 +31,12 @@ public:
   void preordering(node::Node<Label>& tree, int& order);
 
 
+  void execute_feature_join(
+      std::vector<node::Node<Label>>& trees_collection,
+      std::vector<std::pair<int, std::vector<label_feature_set_converter::LabelSetElement>>>& sets_collection,
+      std::vector<std::pair<int, int>>& candidates,
+      std::vector<join::JoinResultElement>& join_result,
+      const double distance_threshold);
 
 
 
@@ -75,6 +82,11 @@ public:
       std::vector<std::pair<int, std::vector<label_set_converter::LabelSetElement>>>& sets_collection,
       std::vector<std::pair<int, int>>& candidates,
       const double distance_threshold);
+  
+  void retrive_feature_candidates(
+    std::vector<std::pair<int, std::vector<label_feature_set_converter::LabelSetElement>>>& sets_collection,
+    std::vector<std::pair<int, int>>& candidates,
+    const double distance_threshold);
 
 
     // void execute_feature_join(

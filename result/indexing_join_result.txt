@@ -1,0 +1,25 @@
+bolzano+1 : 917
+bolzano+5 : 3537
+bolzano+10 : 18685
+bolzano+15 : 71968
+bolzano+20 : 195487
+bolzano+25 : 270760
+bolzano+30 : 436822
+
+sentiment+1 : 27504
+sentiment+5 : 288639
+sentiment+10 : 13088742
+sentiment+15 : 120477349
+sentiment+20 : 694106201
+sentiment+25 : 2230843753
+sentiment+30 : 5857613203
+
+syn1+1 : 10882
+syn1+5 : 12610
+syn1+10 : 11014
+syn1+100 : 812087
+syn1+150 : 4098056
+syn1+200 : 6575947
+syn1+250 : 8876861
+syn1+300 : 11052781
+

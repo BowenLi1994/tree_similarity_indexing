@@ -41,9 +41,20 @@ int main(int, char** argv) {
     join::TJoinTI<Label, ted::TouzetBaselineTreeIndex<CostModel>> ted_join_algorithm;
 
     int threshold=std::atoi(argv[2]);
-    ted_join_algorithm.execute_join(trees_collection,sets_collection, candidates, join_result, threshold);
 
-    std::cout<<"result: "<<join_result.size()<<std::endl;
+    
+    auto begin = std::chrono::high_resolution_clock::now();
+    ted_join_algorithm.execute_join(trees_collection,sets_collection, candidates, join_result, threshold);
+    auto end = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - begin);
+
+    std::ofstream resultFile;
+    std::string filepath="/home/bowen/tree_similarity_indexing/result/tjoin_result.txt";
+    resultFile.open(filepath,std::ios_base::app);
+
+    resultFile<<filename<<"+"<<threshold<<" : "<<duration.count()<<std::endl;
+
+    //std::cout<<"result: "<<join_result.size()<<std::endl;
 
 
     return 0;

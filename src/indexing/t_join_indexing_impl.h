@@ -62,15 +62,15 @@ void TJoin_Indexing<Label, VerificationAlgorithm>::execute_join(
     const double distance_threshold) {
 
 
-  std::cout<<"retrive_candidates----->"<<std::endl;
+  //std::cout<<"retrive_candidates----->"<<std::endl;
   // Retrieves candidates from the candidate index.
   retrieve_candidates(sets_collection, candidates, distance_threshold);
 
-  std::cout<<"upperbound----->"<<std::endl;
+  //std::cout<<"upperbound----->"<<std::endl;
   //Use the label guided mapping upper bound to send candidates immediately .
   upperbound(trees_collection, candidates, join_result, distance_threshold);
 
-  std::cout<<"verify------->"<<std::endl;
+  //std::cout<<"verify------->"<<std::endl;
   // Verify all computed join candidates and return the join result.
   verify_candidates(trees_collection, candidates, join_result, distance_threshold);
 }
@@ -442,16 +442,6 @@ void TJoin_Indexing<Label, VerificationAlgorithm>::convert_trees_to_feature_sets
 
 
 
-// template <typename Label, typename VerificationAlgorithm>
-// void execute_feature_join(
-//   std::vector<node::Node<Label>>& trees_collection,
-//   std::vector<std::pair<int, std::vector<label_feature_set_converter::LabelSetElement>>>& sets_collection,
-//   std::vector<std::pair<int, int>>& candidates,
-//   std::vector<join::JoinResultElement>& join_result,
-//   const double distance_threshold){
-
-//   }
-
 template <typename Label, typename VerificationAlgorithm>
 void TJoin_Indexing<Label, VerificationAlgorithm>::retrieve_candidates(
     std::vector<std::pair<int, std::vector<label_set_converter::LabelSetElement>>>& sets_collection,
@@ -541,3 +531,34 @@ void TJoin_Indexing<Label, VerificationAlgorithm>::verify_candidates(
 //     TJoinTI<Label, VerificationAlgorithm>::get_number_of_il_lookups() const {
 //   return il_lookups_;
 // }
+
+
+template <typename Label, typename VerificationAlgorithm>
+void TJoin_Indexing<Label, VerificationAlgorithm>::execute_feature_join(
+  std::vector<node::Node<Label>>& trees_collection,
+  std::vector<std::pair<int, std::vector<label_feature_set_converter::LabelSetElement>>>& sets_collection,
+  std::vector<std::pair<int, int>>& candidates,
+  std::vector<join::JoinResultElement>& join_result,
+  const double distance_threshold){
+
+    retrive_feature_candidates(sets_collection,candidates,distance_threshold);
+
+  }
+
+
+template <typename Label, typename VerificationAlgorithm>
+void TJoin_Indexing<Label, VerificationAlgorithm>::retrive_feature_candidates(
+    std::vector<std::pair<int, std::vector<label_feature_set_converter::LabelSetElement>>>& sets_collection,
+    std::vector<std::pair<int, int>>& candidates,
+    const double distance_threshold){
+
+    // Initialize candidate index.
+    feature_candidate_index::CandidateIndex fc_candidates;
+
+    fc_candidates.lookup(sets_collection,candidates,100,distance_threshold);
+
+
+
+    
+
+    }

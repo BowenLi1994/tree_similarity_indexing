@@ -13,24 +13,43 @@
 #include "ted_algorithm.h"
 #include "touzet_baseline_tree_index.h"
 #include "indexing_parser.h"
+#include "t_join_indexing.h"
 
 
 
 int main(int, char** argv) {
 
+    // Type aliases.
     using Label = label::StringLabel;
+    using CostModel = cost_model::UnitCostModelLD<Label>;
+    using LabelDictionary = label::LabelDictionary<Label>;
 
-    std::vector<node::Node<Label>> trees_collection;
-
-    parser::IndexingParser ip;
+    // Initialise label dictionary - separate dictionary for each test tree becuse it is easier to keep track of label ids.
+    LabelDictionary ld;
+  
+    // Initialise cost model.
+    CostModel ucm(ld);
 
     std::string filename(argv[1]);
     std::string flag(argv[2]);
+
+    std::vector<node::Node<Label>> trees_collection;
+    parser::BracketNotationParser bnp;
+    bnp.parse_collection(trees_collection, "/home/bowen/dataset/tree/"+filename+"_sorted.bracket");
+
+    parser::IndexingParser ip;
+    std::vector<std::pair<int, std::vector<label_feature_set_converter::LabelSetElement>>> sets_collection;  
+    ip.parse_collection_feature(sets_collection,filename,flag);
+
+    std::vector<std::pair<int, int>> candidates;
+    std::vector<join::JoinResultElement> join_result;
+    join::TJoin_Indexing<Label, ted::TouzetBaselineTreeIndex<CostModel>> ted_join_indexing_algorithm;
+
+    ted_join_indexing_algorithm.execute_feature_join(trees_collection,sets_collection,candidates,join_result,2.0);
     
 
-    std::vector<std::pair<int, std::vector<label_feature_set_converter::LabelSetElement>>> sets_collection;
-    
-    ip.parse_collection_feature(sets_collection,filename,flag);
+
+
 
     // for(auto set: sets_collection){
     //     std::cout<<"tree size: "<<set.first<<std::endl;

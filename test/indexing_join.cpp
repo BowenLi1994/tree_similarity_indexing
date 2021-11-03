@@ -57,9 +57,19 @@ int main(int, char** argv){
     
     int threshold = std::atoi(argv[3]);
 
-    ted_indexing_join_algorithm.execute_join(trees_collection,sets_collection,candidates,join_result,(double)threshold);
 
-    std::cout<<"join result: "<<join_result.size()<<std::endl;
+    auto begin = std::chrono::high_resolution_clock::now();
+    ted_indexing_join_algorithm.execute_join(trees_collection,sets_collection,candidates,join_result,(double)threshold);
+    auto end = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - begin);
+
+    std::ofstream resultFile;
+    std::string filepath="/home/bowen/tree_similarity_indexing/result/indexing_join_result.txt";
+    resultFile.open(filepath,std::ios_base::app);
+
+    resultFile<<filename<<"+"<<threshold<<" : "<<duration.count()<<std::endl;
+
+    //std::cout<<"join result: "<<join_result.size()<<std::endl;
     
 
 
