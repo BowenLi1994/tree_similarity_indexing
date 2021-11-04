@@ -47,6 +47,7 @@ int main(int, char** argv) {
 
     ted_join_indexing_algorithm.execute_feature_join(trees_collection,sets_collection,candidates,join_result,2.0);
     
+    
 
 
 

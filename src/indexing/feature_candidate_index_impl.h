@@ -282,8 +282,81 @@ bool CandidateIndex::feature_filter(label_feature_set_converter::StructuralVecto
   label_feature_set_converter::StructuralVector& sv2, 
   const double threshold){
 
+    if(std::abs(sv1.number_nodes_ancestor-sv2.number_nodes_ancestor)+
+    std::abs(sv1.number_nodes_descendant-sv2.number_nodes_descendant)+
+    std::abs(sv1.number_nodes_left-sv2.number_nodes_left)+
+    std::abs(sv1.number_nodes_right-sv2.number_nodes_right)> threshold)
+      return false;
+    
+    else{
+      //label distance:
+     int label_distance=0;
+     for(int i=0;i<4;i++){
+       label_distance+=histogram_distance_dist_2(sv1.label_histogram[i],sv2.label_histogram[i]);
+     }
+
+     if(label_distance/2 > threshold)
+      return false;
+     else{
+       int leaf_distance=0;
+       for(int i=0;i<4;i++){
+         leaf_distance+=histogram_distance_dist(sv1.leaf_histogram[i],sv2.leaf_histogram[i]);
+       }
+     }
+
+     
+    }
+
     //if(abs(sv1.number_nodes_left-sv2.number_nodes_left))
 
     return false;
 
+  }
+
+  int CandidateIndex::histogram_distance_dist(const std::unordered_map<int,int>& m1,const std::unordered_map<int,int>& m2){
+
+    int distance=0;
+
+    for(auto kv: m1){
+     auto it=m2.find(kv.first);
+     if(it!=m2.end()){
+       distance+=std::abs(it->second-kv.second);
+     }
+     else{
+       distance+=kv.second;
+     }
+    }
+
+    for(auto kv:m2){
+      auto it=m1.find(kv.first);
+      if(it==m1.end()){
+        distance+=kv.second;
+      }
+    }
+    return distance;
+  }
+
+  int CandidateIndex::histogram_distance_dist_2(
+    const std::unordered_map<std::string,int>& m1,
+    const std::unordered_map<std::string,int>& m2){
+
+    int distance=0;
+
+    for(auto kv: m1){
+     auto it=m2.find(kv.first);
+     if(it!=m2.end()){
+       distance+=std::abs(it->second-kv.second);
+     }
+     else{
+       distance+=kv.second;
+     }
+    }
+
+    for(auto kv:m2){
+      auto it=m1.find(kv.first);
+      if(it==m1.end()){
+        distance+=kv.second;
+      }
+    }
+    return distance;
   }

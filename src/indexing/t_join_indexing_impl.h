@@ -555,7 +555,7 @@ void TJoin_Indexing<Label, VerificationAlgorithm>::retrive_feature_candidates(
     // Initialize candidate index.
     feature_candidate_index::CandidateIndex fc_candidates;
 
-    fc_candidates.lookup(sets_collection,candidates,100,distance_threshold);
+    fc_candidates.lookup(sets_collection,candidates,5,distance_threshold);
 
 
 

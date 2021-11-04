@@ -88,6 +88,9 @@ private:
   bool feature_filter(label_feature_set_converter::StructuralVector& sv1, 
   label_feature_set_converter::StructuralVector& sv2, 
   const double threshold);
+
+  int histogram_distance_dist(const std::unordered_map<int,int>& m1,const std::unordered_map<int,int>& m2);
+  int histogram_distance_dist_2(const std::unordered_map<std::string,int>& m1,const std::unordered_map<std::string,int>& m2);
 };
 
 // Implementation details.
