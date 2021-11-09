@@ -25,11 +25,15 @@ void TJoinTI<Label, VerificationAlgorithm>::execute_join(
   // Retrieves candidates from the candidate index.
   retrieve_candidates(sets_collection, candidates, distance_threshold);
 
+  candidates_num=candidates.size();
+
   // Use the label guided mapping upper bound to send candidates immediately .
   upperbound(trees_collection, candidates, join_result, distance_threshold);
 
   // Verify all computed join candidates and return the join result.
   verify_candidates(trees_collection, candidates, join_result, distance_threshold);
+
+  result=join_result.size();
 }
 
 template <typename Label, typename VerificationAlgorithm>
@@ -58,6 +62,7 @@ void TJoinTI<Label, VerificationAlgorithm>::retrieve_candidates(
 
   // Copy the number of pre-candidates.
   pre_candidates_ = c_index.get_number_of_pre_candidates();
+  pre_candidates=c_index.get_number_of_pre_candidates();
   // Copy the number of inverted list lookups.
   il_lookups_ = c_index.get_number_of_il_lookups();
 }
@@ -109,6 +114,7 @@ void TJoinTI<Label, VerificationAlgorithm>::verify_candidates(
     node::index_tree(ti_1, trees_collection[pair.first], ld_, cm);
     node::index_tree(ti_2, trees_collection[pair.second], ld_, cm);
     double ted_value = ted_algorithm.ted_k(ti_1, ti_2, distance_threshold);
+
     if(ted_value <= distance_threshold)
       join_result.emplace_back(pair.first, pair.second, ted_value);
     

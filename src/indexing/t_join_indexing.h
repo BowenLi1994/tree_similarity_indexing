@@ -141,6 +141,8 @@ public:
 // //   long long int get_number_of_il_lookups() const;
 long long int number_of_labels_;
 
+int candidates_num,pre_candidates,result;
+
 private:
   /// LabelDictionary for using with LGMTreeIndex and VerificationAlgorithm.
   label::LabelDictionary<Label> ld_;

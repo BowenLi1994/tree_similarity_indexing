@@ -296,6 +296,9 @@ void  IndexingParser::parse_collection(
     const std::string& file_name,
     const std::string& flag){
 
+
+      //std::cout<<"parser: "<<std::endl;
+
       std::string label_file_path="/home/bowen/dataset/indexing/"+file_name+".label_indexing";
       std::string degree_file_path="/home/bowen/dataset/indexing/"+file_name+".degree_indexing";
       std::string leaf_file_path="/home/bowen/dataset/indexing/"+file_name+".leaf_indexing";
@@ -309,11 +312,14 @@ void  IndexingParser::parse_collection(
           throw std::runtime_error("ERROR: Problem with opening the label  '" + label_file_path + "' in Indexing::parse_collection_efficient.");
         }
         std::string indexing_string;
-        
+        //int i=1;
         while (std::getline(index_file, indexing_string)){
+          //std::cout<<"tree: "<<i<<std::endl;
           std::pair<int,std::vector<label_feature_set_converter::LabelSetElement>> set;
+          //std::cout<<"string: "<<indexing_string<<std::endl;
           parse_single_feature(indexing_string,set,1);
           sets_collection.push_back(set);
+          //i++;
         }
 
         index_file.close();

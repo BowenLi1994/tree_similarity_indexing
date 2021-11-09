@@ -120,6 +120,7 @@ void TJoin_Indexing<Label, VerificationAlgorithm>::feature_indexing(
           int degree=tree_postorder_collection[counter]->children_.size();
           int leaf_dist=tree_postorder_collection[counter]->leaf_dist;
           std::string label=tree_postorder_collection[counter]->label().to_string();
+          
 
           //degree histogram
           if(tree_postorder_collection[i]->degree_histogram[2][degree]!=-1){
@@ -149,6 +150,7 @@ void TJoin_Indexing<Label, VerificationAlgorithm>::feature_indexing(
           int degree=tree_postorder_collection[counter]->children_.size();
           int leaf_dist=tree_postorder_collection[counter]->leaf_dist;
           std::string label=tree_postorder_collection[counter]->label().to_string();
+
 
           //degree histogram
           if(tree_postorder_collection[i]->degree_histogram[1][degree]!=-1){
@@ -189,7 +191,6 @@ void TJoin_Indexing<Label, VerificationAlgorithm>::feature_indexing(
           int degree=tree_postorder_collection[counter]->children_.size();
           int leaf_dist=tree_postorder_collection[counter]->leaf_dist;
           std::string label=tree_postorder_collection[counter]->label().to_string();
-
           //degree histogram
           if(tree_postorder_collection[i]->degree_histogram[0][degree]!=-1){
             tree_postorder_collection[i]->degree_histogram[0][degree]++;
@@ -218,6 +219,7 @@ void TJoin_Indexing<Label, VerificationAlgorithm>::feature_indexing(
           int degree=tree_postorder_collection[counter]->children_.size();
           int leaf_dist=tree_postorder_collection[counter]->leaf_dist;
           std::string label=tree_postorder_collection[counter]->label().to_string();
+          
 
           //degree histogram
           if(tree_postorder_collection[i]->degree_histogram[3][degree]!=-1){
@@ -541,7 +543,19 @@ void TJoin_Indexing<Label, VerificationAlgorithm>::execute_feature_join(
   std::vector<join::JoinResultElement>& join_result,
   const double distance_threshold){
 
+    //std::cout<<"retrive candidates"<<std::endl;
     retrive_feature_candidates(sets_collection,candidates,distance_threshold);
+    candidates_num=candidates.size();
+    //std::cout<<"upperbound----->"<<std::endl;
+    //Use the label guided mapping upper bound to send candidates immediately .
+    upperbound(trees_collection, candidates, join_result, distance_threshold);
+
+
+    //std::cout<<"verify------->"<<std::endl;
+    // Verify all computed join candidates and return the join result.
+    verify_candidates(trees_collection, candidates, join_result, distance_threshold);
+
+    result=join_result.size();
 
   }
 
@@ -555,7 +569,9 @@ void TJoin_Indexing<Label, VerificationAlgorithm>::retrive_feature_candidates(
     // Initialize candidate index.
     feature_candidate_index::CandidateIndex fc_candidates;
 
-    fc_candidates.lookup(sets_collection,candidates,5,distance_threshold);
+    fc_candidates.lookup(sets_collection,candidates,number_of_labels_,distance_threshold);
+
+    pre_candidates=fc_candidates.get_number_of_pre_candidates();
 
 
 

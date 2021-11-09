@@ -31,7 +31,9 @@ int main(int, char** argv) {
     CostModel ucm(ld);
 
     std::string filename(argv[1]);
-    std::string flag(argv[2]);
+    int threshold=std::atoi(argv[2]);
+    std::string flag(argv[3]);
+    int number_of_labels=std::atoi(argv[4]);
 
     std::vector<node::Node<Label>> trees_collection;
     parser::BracketNotationParser bnp;
@@ -45,7 +47,27 @@ int main(int, char** argv) {
     std::vector<join::JoinResultElement> join_result;
     join::TJoin_Indexing<Label, ted::TouzetBaselineTreeIndex<CostModel>> ted_join_indexing_algorithm;
 
-    ted_join_indexing_algorithm.execute_feature_join(trees_collection,sets_collection,candidates,join_result,2.0);
+    ted_join_indexing_algorithm.number_of_labels_=number_of_labels;
+
+
+    auto begin = std::chrono::high_resolution_clock::now();
+    ted_join_indexing_algorithm.execute_feature_join(trees_collection,sets_collection,candidates,join_result,(double)threshold);
+    auto end = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - begin);
+
+    // std::ofstream resultFile;
+    // std::string filepath="/home/bowen/tree_similarity_indexing/result/feature_join_result.txt";
+    // resultFile.open(filepath,std::ios_base::app);
+
+    // resultFile<<filename<<"+"<<threshold<<" : "<<duration.count()<<std::endl;
+
+    std::ofstream resultFile;
+    std::string filepath="/home/bowen/tree_similarity_indexing/result/feature_join_candidates.txt";
+    resultFile.open(filepath,std::ios_base::app);
+    resultFile<<filename<<"+"<<threshold<<
+    "  pre-candidates: "<<ted_join_indexing_algorithm.pre_candidates<<" candidates: "<<ted_join_indexing_algorithm.candidates_num
+    <<" result: "<<ted_join_indexing_algorithm.result<<std::endl;
+
     
     
 

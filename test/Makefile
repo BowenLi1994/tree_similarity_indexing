@@ -21,11 +21,13 @@ feature_indexing:
 
 resize:
 	$(CC) $(CFLAGS) $(CXXFLAGS) resize.cpp
-	$(CC) -o resize *.o 
+	$(CC) -o resize resize.o
+	rm resize.o 
 
 feature_join:
 	$(CC) $(CFLAGS) $(CXXFLAGS) feature_join.cpp
-	$(CC) -o feature_join *.o 
+	$(CC) -o feature_join  feature_join.o
+	rm feature_join.o
 
 tjoin_test:
 	$(CC) $(CFLAGS) $(CXXFLAGS) tjoin_test.cpp

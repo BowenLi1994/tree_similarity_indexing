@@ -1,0 +1,28 @@
+bolzano+1  pre-candidates: 45 candidates: 9 result: 9
+bolzano+5  pre-candidates: 745 candidates: 274 result: 196
+bolzano+10  pre-candidates: 2579 candidates: 1139 result: 840
+bolzano+15  pre-candidates: 4371 candidates: 2465 result: 1692
+bolzano+20  pre-candidates: 6049 candidates: 4014 result: 2868
+bolzano+25  pre-candidates: 7531 candidates: 5267 result: 4091
+bolzano+30  pre-candidates: 8732 candidates: 6340 result: 5056
+
+
+
+syn4+1  pre-candidates: 1201 candidates: 1 result: 1
+syn4+10  pre-candidates: 1270 candidates: 1 result: 1
+syn4+30  pre-candidates: 1271 candidates: 67 result: 1
+syn4+50  pre-candidates: 1342 candidates: 294 result: 1
+syn4+100  pre-candidates: 1537 candidates: 1046 result: 2
+syn4+150  pre-candidates: 2366 candidates: 1565 result: 2
+syn4+200  pre-candidates: 3831 candidates: 3061 result: 2
+
+
+
+
+syn3+1  pre-candidates: 616 candidates: 96 result: 95
+syn3+5  pre-candidates: 2213 candidates: 1154 result: 698
+syn3+10  pre-candidates: 3984 candidates: 2960 result: 1869
+syn3+15  pre-candidates: 5634 candidates: 4675 result: 3342
+syn3+20  pre-candidates: 7066 candidates: 6231 result: 4605
+syn3+25  pre-candidates: 8338 candidates: 7600 result: 5692
+syn3+30  pre-candidates: 9447 candidates: 8803 result: 6707

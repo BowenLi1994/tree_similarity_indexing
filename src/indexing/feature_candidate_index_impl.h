@@ -12,7 +12,7 @@ void CandidateIndex::lookup(
     const int number_of_labels, 
     const double distance_threshold) {
 
-  //std::cout<<"looking up: "<<std::endl;
+  
   // inverted list index.
   std::vector<candidate_index::InvertedListElement> il_index(number_of_labels);
   // containing specific data of a set. (e.g. actual overlap, index prefix)
@@ -30,11 +30,6 @@ void CandidateIndex::lookup(
                                  // the overlap is stored in the set_data
     int r_size = sets_collection[r_id].first; // number of elements in r
 
-
-    // std::cout<<"**<------------------ Generate pre candidates ------------------>**"<<std::endl;
-    // std::cout<<"r id: "<<r_id<<" r size: "<<r_size<<std::endl;
-
-
     // *****************************
     // ** Generate pre candidates **
     // *****************************
@@ -51,23 +46,15 @@ void CandidateIndex::lookup(
     // iterate through probing prefix elements and extend the candidate set
     p = 0;
     // until tau + 1 nodes of the probing set are processed
-    //std::cout<<"probing the tau +1 nodes"<<std::endl;
     while(p < r.size()) {
       // remove all entries in the inverted list index up to the position where 
       // the size is greater than the lower bound
       
-      //bool flag=false;
-      //std::cout<<"label id: "<<r[p].id<<std::endl;
       for(std::size_t s = il_index[r[p].id].offset; s < il_index[r[p].id].element_list.size() &&
-          sets_collection[il_index[r[p].id].element_list[s].first].first < r_size - distance_threshold; s++){
-      
+          sets_collection[il_index[r[p].id].element_list[s].first].first < r_size - distance_threshold; s++){ 
           ++il_index[r[p].id].offset;
         }
         
-      // std::cout<<"iverted list: updating offset"<<std::endl;
-      // for(size_t i=0; i<il_index.size();i++){
-      //   std::cout<<"il["<<i<<"]: offset: "<<il_index[i].offset<<std::endl;    
-      // }
 
       // iterate through all remaining sets for the current token r[p] in the 
       // inverted list index and add them to the candidates
@@ -97,24 +84,10 @@ void CandidateIndex::lookup(
     // count number of precandidates
     pre_candidates_ += M.size();
 
-    // std::cout<<"set data: "<<std::endl;
-    // for(size_t i=0;i<set_data.size();i++){
-    //   std::cout<<"set["<<i<<"] : overlap: "<<set_data[i].overlap<<" prefix: "<<set_data[i].prefix<<std::endl;
-    // }
     
     // add all elements in the prefix of r in the inverted list
     for(int p = 0; p < set_data[r_id].prefix; p++)
       il_index[r[p].id].element_list.push_back(std::make_pair(r_id, p));
-
-
-    // std::cout<<"updated iverted list: "<<std::endl;
-    //   for(size_t i=0; i<il_index.size();i++){
-    //     std::cout<<"il["<<i<<"]: offset: "<<il_index[i].offset<<std::endl;
-    //     std::cout<<"elment list: "<<std::endl;
-    //     for(size_t l=0;l<il_index[i].element_list.size();l++){
-    //       std::cout<<"pair: "<<il_index[i].element_list[l].first<<" "<<il_index[i].element_list[l].second<<std::endl;
-    //     }
-    //   }
 
 
     // *****************************
@@ -216,12 +189,14 @@ int CandidateIndex::structural_mapping(
 
     //std::cout<<"T and T's only has one such label"<<std::endl;
     // no duplicates -> do positional filter
-    if(abs(sv_s.struct_vect[0].number_nodes_left - sv_r.struct_vect[0].number_nodes_left) + 
-       abs(sv_s.struct_vect[0].number_nodes_right - sv_r.struct_vect[0].number_nodes_right) +
-       abs(sv_s.struct_vect[0].number_nodes_ancestor - sv_r.struct_vect[0].number_nodes_ancestor) +
-       abs(sv_s.struct_vect[0].number_nodes_descendant - sv_r.struct_vect[0].number_nodes_descendant) <= distance_threshold) {
-      return 1; // one tau-valid node pair
-    }
+    if(feature_filter(sv_s.struct_vect[0],sv_r.struct_vect[0],distance_threshold))
+      return 1;
+    // if(abs(sv_s.struct_vect[0].number_nodes_left - sv_r.struct_vect[0].number_nodes_left) + 
+    //    abs(sv_s.struct_vect[0].number_nodes_right - sv_r.struct_vect[0].number_nodes_right) +
+    //    abs(sv_s.struct_vect[0].number_nodes_ancestor - sv_r.struct_vect[0].number_nodes_ancestor) +
+    //    abs(sv_s.struct_vect[0].number_nodes_descendant - sv_r.struct_vect[0].number_nodes_descendant) <= distance_threshold) {
+    //   return 1; // one tau-valid node pair
+    // }
   } else {
 
     //std::cout<<"neighter of them has mutilple labels"<<std::endl;
@@ -252,13 +227,17 @@ int CandidateIndex::structural_mapping(
         // postorder id in right hand side duplicates is too large to satisfy the postorder lower bound
         if(right_hand_duplicate.postorder_id > distance_threshold + left_hand_duplicate.postorder_id)
           break;
-        if(abs(right_hand_duplicate.number_nodes_left - left_hand_duplicate.number_nodes_left) + 
-           abs(right_hand_duplicate.number_nodes_right - left_hand_duplicate.number_nodes_right) +
-           abs(right_hand_duplicate.number_nodes_ancestor - left_hand_duplicate.number_nodes_ancestor) +
-           abs(right_hand_duplicate.number_nodes_descendant - left_hand_duplicate.number_nodes_descendant) <= distance_threshold) {
+        if(feature_filter(right_hand_duplicate,left_hand_duplicate,distance_threshold)){
           ++tau_valid;
           break;
         }
+        // if(abs(right_hand_duplicate.number_nodes_left - left_hand_duplicate.number_nodes_left) + 
+        //    abs(right_hand_duplicate.number_nodes_right - left_hand_duplicate.number_nodes_right) +
+        //    abs(right_hand_duplicate.number_nodes_ancestor - left_hand_duplicate.number_nodes_ancestor) +
+        //    abs(right_hand_duplicate.number_nodes_descendant - left_hand_duplicate.number_nodes_descendant) <= distance_threshold) {
+        //   ++tau_valid;
+        //   break;
+        // }
       }
     }
   }
@@ -286,8 +265,7 @@ bool CandidateIndex::feature_filter(label_feature_set_converter::StructuralVecto
     std::abs(sv1.number_nodes_descendant-sv2.number_nodes_descendant)+
     std::abs(sv1.number_nodes_left-sv2.number_nodes_left)+
     std::abs(sv1.number_nodes_right-sv2.number_nodes_right)> threshold)
-      return false;
-    
+      return false;  
     else{
       //label distance:
      int label_distance=0;
@@ -295,21 +273,30 @@ bool CandidateIndex::feature_filter(label_feature_set_converter::StructuralVecto
        label_distance+=histogram_distance_dist_2(sv1.label_histogram[i],sv2.label_histogram[i]);
      }
 
-     if(label_distance/2 > threshold)
+     if(label_distance/2.0 > threshold)
       return false;
      else{
        int leaf_distance=0;
        for(int i=0;i<4;i++){
          leaf_distance+=histogram_distance_dist(sv1.leaf_histogram[i],sv2.leaf_histogram[i]);
        }
-     }
 
-     
+       if(leaf_distance>threshold)
+        return false;
+       else{
+         int degree_distance=0;
+         for(int i=0;i<4;i++){
+           degree_distance+=histogram_distance_dist(sv1.degree_histogram[i],sv2.degree_histogram[i]);
+         }
+         if(degree_distance/3.0> threshold)
+          return false;
+         else
+          return true;
+      }
+     }    
     }
 
-    //if(abs(sv1.number_nodes_left-sv2.number_nodes_left))
-
-    return false;
+    return true;
 
   }
 

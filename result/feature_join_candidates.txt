@@ -1,0 +1,5 @@
+bolzano+1  pre-candidates: 9 candidates: 9 result: 9
+bolzano+30  pre-candidates: 7672 candidates: 6196 result: 5048
+bolzano+30  pre-candidates: 7811 candidates: 6288 result: 5056
+bolzano+30  pre-candidates: 8699 candidates: 6340 result: 5056
+bolzano+30  pre-candidates: 8260 candidates: 6228 result: 5048

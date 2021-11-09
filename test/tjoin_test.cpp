@@ -48,11 +48,18 @@ int main(int, char** argv) {
     auto end = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - begin);
 
-    std::ofstream resultFile;
-    std::string filepath="/home/bowen/tree_similarity_indexing/result/tjoin_result.txt";
-    resultFile.open(filepath,std::ios_base::app);
+    // std::ofstream resultFile;
+    // std::string filepath="/home/bowen/tree_similarity_indexing/result/tjoin_result.txt";
+    // resultFile.open(filepath,std::ios_base::app);
 
-    resultFile<<filename<<"+"<<threshold<<" : "<<duration.count()<<std::endl;
+    // resultFile<<filename<<"+"<<threshold<<" : "<<duration.count()<<std::endl;
+    
+    std::ofstream resultFile;
+    std::string filepath="/home/bowen/tree_similarity_indexing/result/tjoin_candidates.txt";
+    resultFile.open(filepath,std::ios_base::app);
+    resultFile<<filename<<"+"<<threshold<<
+    "  pre-candidates: "<<ted_join_algorithm.pre_candidates<<" candidates: "<<ted_join_algorithm.candidates_num
+    <<" result: "<<ted_join_algorithm.result<<std::endl;
 
     //std::cout<<"result: "<<join_result.size()<<std::endl;
 
