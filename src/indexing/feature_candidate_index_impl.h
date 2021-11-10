@@ -261,6 +261,7 @@ bool CandidateIndex::feature_filter(label_feature_set_converter::StructuralVecto
   label_feature_set_converter::StructuralVector& sv2, 
   const double threshold){
 
+
     if(std::abs(sv1.number_nodes_ancestor-sv2.number_nodes_ancestor)+
     std::abs(sv1.number_nodes_descendant-sv2.number_nodes_descendant)+
     std::abs(sv1.number_nodes_left-sv2.number_nodes_left)+
@@ -281,6 +282,7 @@ bool CandidateIndex::feature_filter(label_feature_set_converter::StructuralVecto
          leaf_distance+=histogram_distance_dist(sv1.leaf_histogram[i],sv2.leaf_histogram[i]);
        }
 
+       //std::cout<<"leaf dist: "<<leaf_distance<<std::endl;
        if(leaf_distance>threshold)
         return false;
        else{
@@ -320,6 +322,7 @@ bool CandidateIndex::feature_filter(label_feature_set_converter::StructuralVecto
         distance+=kv.second;
       }
     }
+    //std::cout<<"distance: "<<distance<<std::endl;
     return distance;
   }
 

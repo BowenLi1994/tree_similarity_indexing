@@ -43,6 +43,7 @@ int main(int, char** argv) {
     std::vector<std::pair<int, std::vector<label_feature_set_converter::LabelSetElement>>> sets_collection;  
     ip.parse_collection_feature(sets_collection,filename,flag);
 
+
     std::vector<std::pair<int, int>> candidates;
     std::vector<join::JoinResultElement> join_result;
     join::TJoin_Indexing<Label, ted::TouzetBaselineTreeIndex<CostModel>> ted_join_indexing_algorithm;
@@ -67,6 +68,11 @@ int main(int, char** argv) {
     resultFile<<filename<<"+"<<threshold<<
     "  pre-candidates: "<<ted_join_indexing_algorithm.pre_candidates<<" candidates: "<<ted_join_indexing_algorithm.candidates_num
     <<" result: "<<ted_join_indexing_algorithm.result<<std::endl;
+
+    // for(auto i: join_result){
+    //     std::cout<<"pari: "<<i.tree_id_1<<"&"<<i.tree_id_2<<std::endl;
+    // }
+
 
     
     

@@ -62,6 +62,9 @@ int main(int, char** argv) {
     <<" result: "<<ted_join_algorithm.result<<std::endl;
 
     //std::cout<<"result: "<<join_result.size()<<std::endl;
+    // for(auto i: join_result){
+    //     std::cout<<"pari: "<<i.tree_id_1<<"&"<<i.tree_id_2<<std::endl;
+    // }
 
 
     return 0;
