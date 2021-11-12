@@ -4,6 +4,7 @@ using namespace feature_candidate_index;
 CandidateIndex::CandidateIndex() {
   pre_candidates_ = 0;
   il_lookups_ = 0;
+  same_label_compa=0;
 }
 
 void CandidateIndex::lookup(
@@ -229,6 +230,7 @@ int CandidateIndex::structural_mapping(
           break;
         if(feature_filter(right_hand_duplicate,left_hand_duplicate,distance_threshold)){
           ++tau_valid;
+          ++same_label_compa;
           break;
         }
         // if(abs(right_hand_duplicate.number_nodes_left - left_hand_duplicate.number_nodes_left) + 
@@ -350,3 +352,89 @@ bool CandidateIndex::feature_filter(label_feature_set_converter::StructuralVecto
     }
     return distance;
   }
+
+int CandidateIndex::structural_mapping_ti(label_feature_set_converter::LabelSetElement& sv_r, 
+  label_feature_set_converter::LabelSetElement& sv_s,
+  std::vector<std::vector<std::pair<int,double>>>& distance_vect,
+  const double distance_threshold){
+
+      std::cout<<"strucural mapping"<<std::endl;
+
+  // std::cout<<" set in tree T: "<<sv_r.id<<std::endl;
+  // std::cout<<" set in tree T': "<<sv_s.id<<std::endl;
+  int tau_valid = 0;
+  // check if duplicates exist
+  if(sv_s.weight == 1 && sv_r.weight == 1) {
+
+    //std::cout<<"T and T's only has one such label"<<std::endl;
+    // no duplicates -> do positional filter
+    if(feature_filter(sv_s.struct_vect[0],sv_r.struct_vect[0],distance_threshold))
+      return 1;
+    // if(abs(sv_s.struct_vect[0].number_nodes_left - sv_r.struct_vect[0].number_nodes_left) + 
+    //    abs(sv_s.struct_vect[0].number_nodes_right - sv_r.struct_vect[0].number_nodes_right) +
+    //    abs(sv_s.struct_vect[0].number_nodes_ancestor - sv_r.struct_vect[0].number_nodes_ancestor) +
+    //    abs(sv_s.struct_vect[0].number_nodes_descendant - sv_r.struct_vect[0].number_nodes_descendant) <= distance_threshold) {
+    //   return 1; // one tau-valid node pair
+    // }
+  } else {
+
+    //std::cout<<"neighter of them has mutilple labels"<<std::endl;
+    std::reference_wrapper<label_feature_set_converter::LabelSetElement> se = std::ref(sv_r);
+    std::reference_wrapper<label_feature_set_converter::LabelSetElement> le = std::ref(sv_s);
+    if(sv_s.weight < sv_r.weight) {
+      se = std::ref(sv_s);
+      le = std::ref(sv_r);
+    }
+    // std::cout<<"se weight: "<<se.get().weight<<std::endl;
+    // std::cout<<"le weight: "<<le.get().weight<<std::endl;
+    std::size_t pid_lower_bound_start = 0;
+    std::set<int> passed_node;
+    for(int i = 0; i < se.get().weight; ++i) {
+      if(passed_node.count(i))
+       continue;
+      label_feature_set_converter::StructuralVector& left_hand_duplicate = se.get().struct_vect[i];
+      int left_side_k_window = std::max(0.0, left_hand_duplicate.postorder_id - distance_threshold);
+      // std::cout<<"left hand duplicate: "<<left_hand_duplicate.postorder_id<<std::endl;
+      // std::cout<<"left side k window: "<<left_side_k_window<<std::endl;
+      // skip duplicates at the beginning that doesn't satisfy the postorder lower bound
+      while(pid_lower_bound_start < le.get().struct_vect.size()
+          && le.get().struct_vect[pid_lower_bound_start].postorder_id < left_side_k_window) {
+        ++pid_lower_bound_start;
+      }
+      //std::cout<<"pid_lower_bound_start: "<<pid_lower_bound_start<<std::endl;
+      if(pid_lower_bound_start == le.get().struct_vect.size())
+        break;
+
+      for(int j = pid_lower_bound_start; j < le.get().weight; ++j) {
+        label_feature_set_converter::StructuralVector& right_hand_duplicate = le.get().struct_vect[j];
+        //std::cout<<"right hand duplicate: "<<right_hand_duplicate.postorder_id<<std::endl;
+        // postorder id in right hand side duplicates is too large to satisfy the postorder lower bound
+        if(right_hand_duplicate.postorder_id > distance_threshold + left_hand_duplicate.postorder_id)
+          break;
+        if(feature_filter(right_hand_duplicate,left_hand_duplicate,distance_threshold)){
+          //std::cout<<"pass the filter!!!!!!!!!!!!!!!!!"<<std::endl;
+          ++tau_valid;
+          ++same_label_compa;
+          passed_node.insert(i);
+          for(auto p:distance_vect[i]){
+            if(p.second<=distance_threshold){
+                passed_node.insert(p.first);
+                ++tau_valid;
+            }
+            
+          }
+          break;
+        }
+        // if(abs(right_hand_duplicate.number_nodes_left - left_hand_duplicate.number_nodes_left) + 
+        //    abs(right_hand_duplicate.number_nodes_right - left_hand_duplicate.number_nodes_right) +
+        //    abs(right_hand_duplicate.number_nodes_ancestor - left_hand_duplicate.number_nodes_ancestor) +
+        //    abs(right_hand_duplicate.number_nodes_descendant - left_hand_duplicate.number_nodes_descendant) <= distance_threshold) {
+        //   ++tau_valid;
+        //   break;
+        // }
+      }
+    }
+  }
+  return tau_valid;
+
+    }

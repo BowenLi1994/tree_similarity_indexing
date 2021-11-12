@@ -62,12 +62,17 @@ int main(int, char** argv) {
 
     // resultFile<<filename<<"+"<<threshold<<" : "<<duration.count()<<std::endl;
 
+    // std::ofstream resultFile;
+    // std::string filepath="/home/bowen/tree_similarity_indexing/result/feature_join_candidates.txt";
+    // resultFile.open(filepath,std::ios_base::app);
+    // resultFile<<filename<<"+"<<threshold<<
+    // "  pre-candidates: "<<ted_join_indexing_algorithm.pre_candidates<<" candidates: "<<ted_join_indexing_algorithm.candidates_num
+    // <<" result: "<<ted_join_indexing_algorithm.result<<std::endl;
     std::ofstream resultFile;
-    std::string filepath="/home/bowen/tree_similarity_indexing/result/feature_join_candidates.txt";
+    std::string filepath="/home/bowen/tree_similarity_indexing/result/feature_join_comparation.txt";
     resultFile.open(filepath,std::ios_base::app);
-    resultFile<<filename<<"+"<<threshold<<
-    "  pre-candidates: "<<ted_join_indexing_algorithm.pre_candidates<<" candidates: "<<ted_join_indexing_algorithm.candidates_num
-    <<" result: "<<ted_join_indexing_algorithm.result<<std::endl;
+    resultFile<<filename<<"+"<<threshold<<" : "<<ted_join_indexing_algorithm.same_label_compa<<std::endl;
+
 
     // for(auto i: join_result){
     //     std::cout<<"pari: "<<i.tree_id_1<<"&"<<i.tree_id_2<<std::endl;

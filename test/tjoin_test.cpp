@@ -54,12 +54,19 @@ int main(int, char** argv) {
 
     // resultFile<<filename<<"+"<<threshold<<" : "<<duration.count()<<std::endl;
     
+    // std::ofstream resultFile;
+    // std::string filepath="/home/bowen/tree_similarity_indexing/result/tjoin_candidates.txt";
+    // resultFile.open(filepath,std::ios_base::app);
+    // resultFile<<filename<<"+"<<threshold<<
+    // "  pre-candidates: "<<ted_join_algorithm.pre_candidates<<" candidates: "<<ted_join_algorithm.candidates_num
+    // <<" result: "<<ted_join_algorithm.result<<std::endl;
+
+
+
     std::ofstream resultFile;
-    std::string filepath="/home/bowen/tree_similarity_indexing/result/tjoin_candidates.txt";
+    std::string filepath="/home/bowen/tree_similarity_indexing/result/tjoin_comparation.txt";
     resultFile.open(filepath,std::ios_base::app);
-    resultFile<<filename<<"+"<<threshold<<
-    "  pre-candidates: "<<ted_join_algorithm.pre_candidates<<" candidates: "<<ted_join_algorithm.candidates_num
-    <<" result: "<<ted_join_algorithm.result<<std::endl;
+    resultFile<<filename<<"+"<<threshold<<": "<<ted_join_algorithm.same_label_comparations<<std::endl;
 
     //std::cout<<"result: "<<join_result.size()<<std::endl;
     // for(auto i: join_result){

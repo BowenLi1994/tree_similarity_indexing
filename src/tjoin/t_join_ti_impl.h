@@ -26,6 +26,7 @@ void TJoinTI<Label, VerificationAlgorithm>::execute_join(
   retrieve_candidates(sets_collection, candidates, distance_threshold);
 
   candidates_num=candidates.size();
+  
 
   // Use the label guided mapping upper bound to send candidates immediately .
   upperbound(trees_collection, candidates, join_result, distance_threshold);
@@ -65,6 +66,7 @@ void TJoinTI<Label, VerificationAlgorithm>::retrieve_candidates(
   pre_candidates=c_index.get_number_of_pre_candidates();
   // Copy the number of inverted list lookups.
   il_lookups_ = c_index.get_number_of_il_lookups();
+  same_label_comparations=c_index.same_label_comparation;
 }
 
 template <typename Label, typename VerificationAlgorithm>

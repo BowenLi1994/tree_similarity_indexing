@@ -2,11 +2,11 @@
 
 COMMAND=../test/tjoin_test
 
-# DATASET=bolzano
-# for THRESHOLD in 1 5 10 15 20 25 30
-# do
-#     $COMMAND $DATASET $THRESHOLD &
-# done
+DATASET=bolzano
+for THRESHOLD in 1 5 10 15 20 25 30
+do
+    $COMMAND $DATASET $THRESHOLD &
+done
 
 # DATASET=sentiment
 # for THRESHOLD in 1 5 10 15 20 25 30
@@ -20,17 +20,17 @@ COMMAND=../test/tjoin_test
 #     $COMMAND $DATASET $THRESHOLD &
 # done
 
-# DATASET=syn2
-# for THRESHOLD in 1 5 10 30 50 100 150 200
-# do
-#     $COMMAND $DATASET $THRESHOLD &
-# done
+DATASET=syn2
+for THRESHOLD in 1 5 10 30 50 100 150 200
+do
+    $COMMAND $DATASET $THRESHOLD &
+done
 
-# DATASET=syn4
-# for THRESHOLD in 1 5 10 30 50 100 150 200
-# do
-#     $COMMAND $DATASET $THRESHOLD &
-# done
+DATASET=syn4
+for THRESHOLD in 1 5 10 30 50 100 150 200
+do
+    $COMMAND $DATASET $THRESHOLD &
+done
 
 DATASET=syn3
 for THRESHOLD in 1 5 10 15 20 25 30

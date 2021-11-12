@@ -6,6 +6,7 @@ using namespace candidate_index;
 CandidateIndex::CandidateIndex() {
   pre_candidates_ = 0;
   il_lookups_ = 0;
+  same_label_comparation=0;
 }
 
 void CandidateIndex::lookup(
@@ -258,6 +259,7 @@ int CandidateIndex::structural_mapping(
            abs(right_hand_duplicate.number_nodes_right - left_hand_duplicate.number_nodes_right) +
            abs(right_hand_duplicate.number_nodes_ancestor - left_hand_duplicate.number_nodes_ancestor) +
            abs(right_hand_duplicate.number_nodes_descendant - left_hand_duplicate.number_nodes_descendant) <= distance_threshold) {
+          ++same_label_comparation;
           ++tau_valid;
           break;
         }

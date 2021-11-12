@@ -32,7 +32,11 @@ feature_join:
 tjoin_test:
 	$(CC) $(CFLAGS) $(CXXFLAGS) tjoin_test.cpp
 	$(CC) -o tjoin_test tjoin_test.o
-	rm tjoin_test.o 		
+	rm tjoin_test.o 
+distance_indexing:
+	$(CC) $(CFLAGS) $(CXXFLAGS) distance_indexing.cpp
+	$(CC) -o distance_indexing distance_indexing.o
+	rm distance_indexing.o 			
 
 clean:
 	rm -f ./*.o indexing_test feature_indexing resize feature_join indexing_join tjoin_test

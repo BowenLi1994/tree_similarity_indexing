@@ -26,6 +26,11 @@ public:
 
   void feature_indexing(std::string filename, std::vector<node::Node<Label>>& trees_collection);
 
+  void feature_indexing_online(
+    std::vector<node::Node<Label>>& trees_collection,
+    std::vector<std::pair<int, std::vector<label_feature_set_converter::LabelSetElement>>>& sets_collection
+  );
+
   void postordering(node::Node<Label>& tree, int& order,std::vector<node::Node<Label>*>& tree_postorder_collection);
 
   void preordering(node::Node<Label>& tree, int& order);
@@ -142,6 +147,7 @@ public:
 long long int number_of_labels_;
 
 int candidates_num,pre_candidates,result;
+int same_label_compa;
 
 private:
   /// LabelDictionary for using with LGMTreeIndex and VerificationAlgorithm.

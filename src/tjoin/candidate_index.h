@@ -51,6 +51,8 @@ public:
   ///
   /// \return The number of lookups in the inverted list.
   long int get_number_of_il_lookups() const;
+
+  int same_label_comparation;
 // Member variables.
 private:
   /// Number of precandidates.

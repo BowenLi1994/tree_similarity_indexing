@@ -105,6 +105,7 @@ public:
   long long int get_number_of_il_lookups() const;
 
   int pre_candidates,candidates_num,result;
+  int same_label_comparations;
 
 private:
   /// LabelDictionary for using with LGMTreeIndex and VerificationAlgorithm.

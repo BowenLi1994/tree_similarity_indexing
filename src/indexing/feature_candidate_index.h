@@ -51,6 +51,20 @@ public:
   ///
   /// \return The number of lookups in the inverted list.
   long int get_number_of_il_lookups() const;
+
+  int same_label_compa;
+
+  int structural_mapping_ti(label_feature_set_converter::LabelSetElement& sv_r, 
+    label_feature_set_converter::LabelSetElement& sv_s,
+    std::vector<std::vector<std::pair<int,double>>>& distance_vect,
+    const double distance_threshold);
+  int histogram_distance_dist(const std::unordered_map<int,int>& m1,const std::unordered_map<int,int>& m2);
+  int histogram_distance_dist_2(const std::unordered_map<std::string,int>& m1,const std::unordered_map<std::string,int>& m2);
+
+    int structural_mapping(
+    label_feature_set_converter::LabelSetElement& sv_r, 
+    label_feature_set_converter::LabelSetElement& sv_s,
+    const double distance_threshold);
 // Member variables.
 private:
   /// Number of precandidates.
@@ -66,10 +80,8 @@ private:
   /// \param sv_s All nodes with a specific label in set s.
   /// \param distance_threshold Given distance threshold.
   /// \return number of tau-valid node pairs in sv_r and sv_s.
-  int structural_mapping(
-    label_feature_set_converter::LabelSetElement& sv_r, 
-    label_feature_set_converter::LabelSetElement& sv_s,
-    const double distance_threshold);
+
+
   /// Verify for a given candidate pair r and s if it passes the structural filter.
   ///
   /// \param r First set of the candidate pair.
@@ -89,8 +101,7 @@ private:
   label_feature_set_converter::StructuralVector& sv2, 
   const double threshold);
 
-  int histogram_distance_dist(const std::unordered_map<int,int>& m1,const std::unordered_map<int,int>& m2);
-  int histogram_distance_dist_2(const std::unordered_map<std::string,int>& m1,const std::unordered_map<std::string,int>& m2);
+
 };
 
 // Implementation details.
