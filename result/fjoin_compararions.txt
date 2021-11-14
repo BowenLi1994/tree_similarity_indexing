@@ -1,0 +1,17 @@
+bolzano+30 : 44021
+bolzano+20 : 16258
+syn3+1 : 368
+bolzano+1 : 0
+syn3+5 : 4851
+syn3+10 : 9888
+bolzano+5 : 188
+bolzano+10 : 2065
+bolzano+15 : 8149
+syn3+20 : 16286
+bolzano+25 : 28589
+syn3+25 : 18396
+syn3+15 : 13822
+syn3+30 : 20204
+syn4+5 : 877
+syn4+10 : 827
+syn4+1 : 1002

@@ -36,7 +36,12 @@ tjoin_test:
 distance_indexing:
 	$(CC) $(CFLAGS) $(CXXFLAGS) distance_indexing.cpp
 	$(CC) -o distance_indexing distance_indexing.o
-	rm distance_indexing.o 			
+	rm distance_indexing.o
+fjoin_ti:
+	$(CC) $(CFLAGS) $(CXXFLAGS) fjoin_ti.cpp
+	$(CC) -o fjoin_ti fjoin_ti.o
+	rm fjoin_ti.o
+
 
 clean:
-	rm -f ./*.o indexing_test feature_indexing resize feature_join indexing_join tjoin_test
+	rm -f ./*.o indexing_test feature_indexing resize feature_join indexing_join tjoin_test fjoin_ti

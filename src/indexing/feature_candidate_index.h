@@ -65,6 +65,13 @@ public:
     label_feature_set_converter::LabelSetElement& sv_r, 
     label_feature_set_converter::LabelSetElement& sv_s,
     const double distance_threshold);
+
+ void look_up_ti( 
+    std::vector<std::pair<int, std::vector<label_feature_set_converter::LabelSetElement>>>& sets_collection,
+    std::vector<std::pair<int, int>>& join_candidates,
+    std::vector<std::vector<std::vector<std::vector<std::pair<int,double>>>>>& distance_collection,
+    const int number_of_labels, 
+    const double distance_threshold);
 // Member variables.
 private:
   /// Number of precandidates.

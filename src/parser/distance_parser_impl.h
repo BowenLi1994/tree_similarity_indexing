@@ -2,14 +2,18 @@ using namespace parser;
 
 void DistanceParser::parse_single(const std::string& index_string, std::vector<std::vector<std::vector<std::pair<int,double>>>>& distance_vector){
 
+    //std::cout<<index_string<<std::endl;
+
     std::vector<std::string> label_sets;
     tokenize(index_string,']',label_sets);
     label_sets.pop_back();
 
     for(auto node_sets: label_sets){
+
+        //std::cout<<"node set: "<<node_sets<<std::endl;
         
         //label-->node pair distance
-         std::vector<std::vector<std::pair<int,double>>>node_indexing_distance;
+        std::vector<std::vector<std::pair<int,double>>>node_indexing_distance;
 
         if(node_sets=="["){
             distance_vector.push_back(node_indexing_distance);
@@ -33,9 +37,9 @@ void DistanceParser::parse_single(const std::string& index_string, std::vector<s
                 tokenize(pair,',',node_info);
                 node_indexing_distance[std::stoi(node_info[0])].emplace_back(std::stoi(node_info[1]),std::stod(node_info[2]));
             }
+            distance_vector.push_back(node_indexing_distance);
         }
 
-        distance_vector.push_back(node_indexing_distance);
             
 
     }

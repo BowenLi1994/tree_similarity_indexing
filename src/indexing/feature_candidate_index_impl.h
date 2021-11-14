@@ -358,7 +358,8 @@ int CandidateIndex::structural_mapping_ti(label_feature_set_converter::LabelSetE
   std::vector<std::vector<std::pair<int,double>>>& distance_vect,
   const double distance_threshold){
 
-      std::cout<<"strucural mapping"<<std::endl;
+  // std::cout<<"strucural mapping: id-->"<<sv_r.id<<std::endl;
+  // std::cout<<"sv_r weight: "<<sv_r.weight<<" sv_s weight: "<<sv_s.weight<<std::endl;
 
   // std::cout<<" set in tree T: "<<sv_r.id<<std::endl;
   // std::cout<<" set in tree T': "<<sv_s.id<<std::endl;
@@ -394,7 +395,7 @@ int CandidateIndex::structural_mapping_ti(label_feature_set_converter::LabelSetE
        continue;
       label_feature_set_converter::StructuralVector& left_hand_duplicate = se.get().struct_vect[i];
       int left_side_k_window = std::max(0.0, left_hand_duplicate.postorder_id - distance_threshold);
-      // std::cout<<"left hand duplicate: "<<left_hand_duplicate.postorder_id<<std::endl;
+      //std::cout<<"left hand duplicate: "<<left_hand_duplicate.postorder_id<<std::endl;
       // std::cout<<"left side k window: "<<left_side_k_window<<std::endl;
       // skip duplicates at the beginning that doesn't satisfy the postorder lower bound
       while(pid_lower_bound_start < le.get().struct_vect.size()
@@ -416,25 +417,158 @@ int CandidateIndex::structural_mapping_ti(label_feature_set_converter::LabelSetE
           ++tau_valid;
           ++same_label_compa;
           passed_node.insert(i);
-          for(auto p:distance_vect[i]){
-            if(p.second<=distance_threshold){
+          if(!distance_vect.empty()){
+
+            for(auto p:distance_vect[i]){
+              if(p.second<=distance_threshold){
                 passed_node.insert(p.first);
                 ++tau_valid;
+              }           
             }
             
           }
+
           break;
         }
-        // if(abs(right_hand_duplicate.number_nodes_left - left_hand_duplicate.number_nodes_left) + 
-        //    abs(right_hand_duplicate.number_nodes_right - left_hand_duplicate.number_nodes_right) +
-        //    abs(right_hand_duplicate.number_nodes_ancestor - left_hand_duplicate.number_nodes_ancestor) +
-        //    abs(right_hand_duplicate.number_nodes_descendant - left_hand_duplicate.number_nodes_descendant) <= distance_threshold) {
-        //   ++tau_valid;
-        //   break;
-        // }
       }
     }
   }
   return tau_valid;
 
+}
+
+void CandidateIndex::look_up_ti( 
+    std::vector<std::pair<int, std::vector<label_feature_set_converter::LabelSetElement>>>& sets_collection,
+    std::vector<std::pair<int, int>>& join_candidates,
+    std::vector<std::vector<std::vector<std::vector<std::pair<int,double>>>>>& distance_collection,
+    const int number_of_labels, 
+    const double distance_threshold) {
+
+  
+  // inverted list index.
+  std::vector<candidate_index::InvertedListElement> il_index(number_of_labels);
+  // containing specific data of a set. (e.g. actual overlap, index prefix)
+  std::vector<candidate_index::SetData> set_data(sets_collection.size());
+  // position in label set while processing r
+  std::size_t p = 0;
+
+  // iterate through all sets in the given collection
+  std::vector<std::pair<int, std::vector<label_feature_set_converter::LabelSetElement>>>::iterator r_it = sets_collection.begin();
+  for (; r_it != sets_collection.end(); ++r_it) {
+    std::pair<int, std::vector<label_feature_set_converter::LabelSetElement>>& r_pair = *r_it; // dereference iterator to current set once
+    std::vector<label_feature_set_converter::LabelSetElement> r = r_pair.second; // dereference iterator to current set once
+    int r_id = r_it - sets_collection.begin(); // identifier for r (line number)
+    std::vector<int> M; // holds the set identifiers of the candidate pairs, 
+                                 // the overlap is stored in the set_data
+    int r_size = sets_collection[r_id].first; // number of elements in r
+
+    //std::cout<<"tree: "<<r_id<<std::endl;
+
+    // *****************************
+    // ** Generate pre candidates **
+    // *****************************
+    // add all small trees that does not have to share a common label in the prefix
+    if(r_size <= distance_threshold){
+      //std::cout<<"small tree"<<std::endl; 
+      for(int i = 0; i < r_id; ++i) {
+        if(set_data[i].overlap == 0) 
+          M.push_back(i); // if not, add it to the candidate set M
+        ++set_data[i].overlap; // increase overlap for set i
+      }
     }
+
+    // iterate through probing prefix elements and extend the candidate set
+    p = 0;
+    // until tau + 1 nodes of the probing set are processed
+    //std::cout<<"travse all nodes"<<std::endl;
+    while(p < r.size()) {
+      // remove all entries in the inverted list index up to the position where 
+      // the size is greater than the lower bound
+      
+      for(std::size_t s = il_index[r[p].id].offset; s < il_index[r[p].id].element_list.size() &&
+          sets_collection[il_index[r[p].id].element_list[s].first].first < r_size - distance_threshold; s++){ 
+          ++il_index[r[p].id].offset;
+        }
+        
+
+      // iterate through all remaining sets for the current token r[p] in the 
+      // inverted list index and add them to the candidates
+
+      //std::cout<<" finding candidates"<<std::endl;
+      for(std::size_t s = il_index[r[p].id].offset; s < il_index[r[p].id].element_list.size(); s++) {
+        int set = il_index[r[p].id].element_list[s].first;
+        int pos = il_index[r[p].id].element_list[s].second;
+        // increase the number of lookups in the inverted list
+        ++il_lookups_;
+        // std::cout<<"current set: label pos-->"<<p<<std::endl;
+        // std::cout<<"saving set: tree id-->"<<set<<" label pos: "<<pos<<std::endl;
+        int tau_valid = structural_mapping_ti(r[p], sets_collection[set].second[pos],distance_collection[r_id][p],distance_threshold);
+        //std::cout<<"tau vaild: "<<tau_valid<<std::endl;
+        if(tau_valid != 0 && set_data[set].overlap == 0) 
+          M.push_back(set); // if not, add it to the candidate set M
+        set_data[set].overlap += tau_valid;
+        
+      }
+      // stop as soon as tau + 1 elements have been discovered
+      p++;
+      if(r[p-1].weight_so_far > distance_threshold + 1)
+        break;
+    }
+
+    // store last postition of the index of the label set
+    set_data[r_id].prefix = p;
+    // count number of precandidates
+    pre_candidates_ += M.size();
+
+    //std::cout<<"verifying pre_candidate"<<std::endl;
+    // add all elements in the prefix of r in the inverted list
+    for(int p = 0; p < set_data[r_id].prefix; p++)
+      il_index[r[p].id].element_list.push_back(std::make_pair(r_id, p));
+
+
+    // *****************************
+    // *** Verify pre candidates ***
+    // *****************************
+    // compute structural filter for each candidate (r, s) in M
+    //std::cout<<"**<-- Verify pre candidates -->**"<<std::endl;
+    for (int m: M) {
+
+      //std::cout<<"m: "<<m<<std::endl;
+      std::vector<label_feature_set_converter::LabelSetElement>& s = sets_collection[m].second;
+      // prefix positions for sets r and s in the candidate pair
+      std::size_t pr = 0, ps = 0;
+
+      // check last prefix position; the smaller one starts at prefix position, 
+      // the greater one starts at the overlap
+      if (r[set_data[r_id].prefix-1].id > s[set_data[m].prefix-1].id) {
+
+        //std::cout<<" probing T greater than T' in canidate set"<<std::endl;
+        for(; r[pr].weight_so_far < set_data[m].overlap && pr < r.size(); ++pr) {}
+        ++pr;
+        ps = set_data[m].prefix;
+      } else {
+        //std::cout<<" probing T  smaller than T' in canidate set"<<std::endl;
+        pr = set_data[r_id].prefix;
+        for(; s[ps].weight_so_far < set_data[m].overlap && ps < s.size(); ++ps) {}
+        ++ps;
+      }
+      //std::cout<<"pr: "<<pr<<" ps: "<<ps<<std::endl;
+
+      int maxr = r_size - r[pr-1].weight_so_far + set_data[m].overlap;
+      int maxs = sets_collection[m].first - s[ps-1].weight_so_far + set_data[m].overlap;
+
+      //std::cout<<"maxr: "<<maxr<<" maxs: "<<maxs<<std::endl;
+      // overlap needed for threshold tau between r and s
+      const double eqoverlap = r_size - distance_threshold;
+
+      //std::cout<<"eqoverlap: "<<eqoverlap<<std::endl;
+
+      // verify if r and s belong to the resultset, computed the structural filter
+      if (structural_filter(r, s, eqoverlap, set_data[m].overlap, pr, ps, distance_threshold, maxr, maxs))
+        join_candidates.emplace_back(r_id, m);
+
+      // reset overlap in set_data
+      set_data[m].overlap = 0;
+    }
+  }
+}
