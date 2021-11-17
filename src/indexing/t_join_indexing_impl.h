@@ -584,6 +584,31 @@ void TJoin_Indexing<Label, VerificationAlgorithm>::execute_feature_join_ti(
 
   }
 
+template <typename Label, typename VerificationAlgorithm>
+void TJoin_Indexing<Label, VerificationAlgorithm>::execute_feature_join_rn(
+  std::vector<node::Node<Label>>& trees_collection,
+  std::vector<std::pair<int, std::vector<label_feature_set_converter::LabelSetElement>>>& sets_collection,
+  std::vector<std::vector<std::vector<std::vector<std::pair<int,double>>>>>& distance_collection,
+  std::vector<std::pair<int, int>>& candidates,
+  std::vector<join::JoinResultElement>& join_result,
+  const double distance_threshold){
+
+    std::cout<<"retrive candidates"<<std::endl;
+    retrive_feature_candidates_rn(sets_collection,distance_collection,candidates,distance_threshold);
+    candidates_num=candidates.size();
+    //std::cout<<"upperbound----->"<<std::endl;
+    //Use the label guided mapping upper bound to send candidates immediately .
+    upperbound(trees_collection, candidates, join_result, distance_threshold);
+
+
+    //std::cout<<"verify------->"<<std::endl;
+    // Verify all computed join candidates and return the join result.
+    verify_candidates(trees_collection, candidates, join_result, distance_threshold);
+
+    result=join_result.size();
+
+  }
+
 
 
 template <typename Label, typename VerificationAlgorithm>
@@ -618,6 +643,24 @@ void TJoin_Indexing<Label, VerificationAlgorithm>::retrive_feature_candidates_ti
 
 
   }
+
+template <typename Label, typename VerificationAlgorithm>
+void TJoin_Indexing<Label, VerificationAlgorithm>::retrive_feature_candidates_rn(
+    std::vector<std::pair<int, std::vector<label_feature_set_converter::LabelSetElement>>>& sets_collection,
+    std::vector<std::vector<std::vector<std::vector<std::pair<int,double>>>>>& distance_collection,
+    std::vector<std::pair<int, int>>& candidates,
+    const double distance_threshold){
+
+    // Initialize candidate index.
+    feature_candidate_index::CandidateIndex fc_candidates;
+
+    fc_candidates.look_up_rn(sets_collection,candidates,distance_collection,number_of_labels_,distance_threshold);
+    pre_candidates=fc_candidates.get_number_of_pre_candidates();
+    same_label_compa=fc_candidates.same_label_compa;
+
+
+  }
+
 
 template <typename Label, typename VerificationAlgorithm>
 void TJoin_Indexing<Label, VerificationAlgorithm>::feature_indexing_online(

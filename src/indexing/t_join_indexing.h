@@ -44,6 +44,13 @@ public:
       const double distance_threshold);
 
 
+    void execute_feature_join_rn(
+      std::vector<node::Node<Label>>& trees_collection,
+      std::vector<std::pair<int, std::vector<label_feature_set_converter::LabelSetElement>>>& sets_collection,
+      std::vector<std::vector<std::vector<std::vector<std::pair<int,double>>>>>& distance_collection,
+      std::vector<std::pair<int, int>>& candidates,
+      std::vector<join::JoinResultElement>& join_result,
+      const double distance_threshold);
 
     void execute_feature_join_ti(
       std::vector<node::Node<Label>>& trees_collection,
@@ -100,6 +107,13 @@ public:
     const double distance_threshold);
 
   void retrive_feature_candidates_ti(
+    std::vector<std::pair<int, std::vector<label_feature_set_converter::LabelSetElement>>>& sets_collection,
+    std::vector<std::vector<std::vector<std::vector<std::pair<int,double>>>>>& distance_collection,
+    std::vector<std::pair<int, int>>& candidates,
+    const double distance_threshold
+  );
+
+  void retrive_feature_candidates_rn(
     std::vector<std::pair<int, std::vector<label_feature_set_converter::LabelSetElement>>>& sets_collection,
     std::vector<std::vector<std::vector<std::vector<std::pair<int,double>>>>>& distance_collection,
     std::vector<std::pair<int, int>>& candidates,

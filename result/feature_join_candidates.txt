@@ -26,7 +26,6 @@ syn3+30  pre-candidates: 9284 candidates: 8747 result: 6707
 
 
 syn4+1  pre-candidates: 1 candidates: 1 result: 1
-syn4+5  pre-candidates: 1 candidates: 1 result: 1
 syn4+10  pre-candidates: 2 candidates: 1 result: 1
 syn4+30  pre-candidates: 168 candidates: 2 result: 1
 syn4+50  pre-candidates: 536 candidates: 176 result: 1

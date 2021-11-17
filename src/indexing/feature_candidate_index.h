@@ -66,7 +66,24 @@ public:
     label_feature_set_converter::LabelSetElement& sv_s,
     const double distance_threshold);
 
+    int structural_mapping_rn(
+      label_feature_set_converter::LabelSetElement& sv_r, 
+      label_feature_set_converter::LabelSetElement& sv_s,
+      std::vector<std::vector<std::pair<int,double>>>& distance_vect,
+      const double distance_threshold
+
+    );
+
+    void get_representive_node(std::set<int>& candidates_node,std::vector<int>& result,std::vector<std::set<int>>& included);
+
  void look_up_ti( 
+    std::vector<std::pair<int, std::vector<label_feature_set_converter::LabelSetElement>>>& sets_collection,
+    std::vector<std::pair<int, int>>& join_candidates,
+    std::vector<std::vector<std::vector<std::vector<std::pair<int,double>>>>>& distance_collection,
+    const int number_of_labels, 
+    const double distance_threshold);
+
+  void look_up_rn( 
     std::vector<std::pair<int, std::vector<label_feature_set_converter::LabelSetElement>>>& sets_collection,
     std::vector<std::pair<int, int>>& join_candidates,
     std::vector<std::vector<std::vector<std::vector<std::pair<int,double>>>>>& distance_collection,
@@ -104,7 +121,7 @@ private:
       const double t, int olap, int pr, int ps, 
       int distance_threshold, int maxr, int maxs);
 
-  bool feature_filter(label_feature_set_converter::StructuralVector& sv1, 
+  int feature_filter(label_feature_set_converter::StructuralVector& sv1, 
   label_feature_set_converter::StructuralVector& sv2, 
   const double threshold);
 

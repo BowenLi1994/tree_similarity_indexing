@@ -41,7 +41,11 @@ fjoin_ti:
 	$(CC) $(CFLAGS) $(CXXFLAGS) fjoin_ti.cpp
 	$(CC) -o fjoin_ti fjoin_ti.o
 	rm fjoin_ti.o
+fjoin_rn:
+	$(CC) $(CFLAGS) $(CXXFLAGS) fjoin_rn.cpp
+	$(CC) -o fjoin_rn fjoin_rn.o
+	rm fjoin_rn.o
 
 
 clean:
-	rm -f ./*.o indexing_test feature_indexing resize feature_join indexing_join tjoin_test fjoin_ti
+	rm -f ./*.o indexing_test feature_indexing resize feature_join indexing_join tjoin_test fjoin_ti fjoin_rn
