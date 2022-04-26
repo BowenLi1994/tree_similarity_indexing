@@ -9,6 +9,7 @@ TJoinTI<Label, VerificationAlgorithm>::TJoinTI() {
   sum_subproblem_counter_ = 0;
   number_of_labels_ = 0;
   il_lookups_ = 0;
+  conflicts=0;
 }
 
 template <typename Label, typename VerificationAlgorithm>
@@ -60,13 +61,13 @@ void TJoinTI<Label, VerificationAlgorithm>::retrieve_candidates(
 
   // Retrieve candidates from the candidate index.
   c_index.lookup(sets_collection, candidates, number_of_labels_, distance_threshold);
-
   // Copy the number of pre-candidates.
   pre_candidates_ = c_index.get_number_of_pre_candidates();
-  pre_candidates=c_index.get_number_of_pre_candidates();
   // Copy the number of inverted list lookups.
   il_lookups_ = c_index.get_number_of_il_lookups();
   same_label_comparations=c_index.same_label_comparation;
+  tau_valid_mapping=c_index.tau_valid_mapping;
+  conflicts=c_index.conflicts;
 }
 
 template <typename Label, typename VerificationAlgorithm>

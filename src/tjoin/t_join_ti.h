@@ -106,6 +106,8 @@ public:
 
   int pre_candidates,candidates_num,result;
   int same_label_comparations;
+  int tau_valid_mapping;
+  int conflicts;
 
 private:
   /// LabelDictionary for using with LGMTreeIndex and VerificationAlgorithm.

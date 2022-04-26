@@ -1,0 +1,145 @@
+node[0]-->node[0]: 0
+node[0]-->node[1]: 6
+node[0]-->node[2]: 6
+node[0]-->node[3]: 6
+node[0]-->node[4]: 10
+node[0]-->node[5]: 12  0
+node[0]-->node[6]: 12
+node[0]-->node[7]: 14
+node[0]-->node[8]: 16
+node[0]-->node[9]: 18
+node[0]-->node[10]: 20
+node[0]-->node[11]: 22
+node[1]-->node[0]: 6 2
+node[1]-->node[1]: 0
+node[1]-->node[2]: 2
+node[1]-->node[3]: 4
+node[1]-->node[4]: 6
+node[1]-->node[5]: 8
+node[1]-->node[6]: 10
+node[1]-->node[7]: 14
+node[1]-->node[8]: 14
+node[1]-->node[9]: 16
+node[1]-->node[10]: 18
+node[1]-->node[11]: 22
+node[2]-->node[0]: 6 2
+node[2]-->node[1]: 2
+node[2]-->node[2]: 0
+node[2]-->node[3]: 2
+node[2]-->node[4]: 6
+node[2]-->node[5]: 8
+node[2]-->node[6]: 8
+node[2]-->node[7]: 12
+node[2]-->node[8]: 14
+node[2]-->node[9]: 16
+node[2]-->node[10]: 16
+node[2]-->node[11]: 20
+node[3]-->node[0]: 6 2
+node[3]-->node[1]: 4
+node[3]-->node[2]: 2
+node[3]-->node[3]: 0
+node[3]-->node[4]: 8
+node[3]-->node[5]: 10
+node[3]-->node[6]: 6
+node[3]-->node[7]: 10
+node[3]-->node[8]: 14
+node[3]-->node[9]: 16
+node[3]-->node[10]: 14
+node[3]-->node[11]: 18
+node[4]-->node[0]: 10 1
+node[4]-->node[1]: 6
+node[4]-->node[2]: 6
+node[4]-->node[3]: 8
+node[4]-->node[4]: 0
+node[4]-->node[5]: 2
+node[4]-->node[6]: 4
+node[4]-->node[7]: 14
+node[4]-->node[8]: 8
+node[4]-->node[9]: 10
+node[4]-->node[10]: 12
+node[4]-->node[11]: 22
+node[5]-->node[0]: 12
+node[5]-->node[1]: 8
+node[5]-->node[2]: 8
+node[5]-->node[3]: 10
+node[5]-->node[4]: 2 2
+node[5]-->node[5]: 0
+node[5]-->node[6]: 4
+node[5]-->node[7]: 14
+node[5]-->node[8]: 6
+node[5]-->node[9]: 8
+node[5]-->node[10]: 10
+node[5]-->node[11]: 22
+node[6]-->node[0]: 12
+node[6]-->node[1]: 10
+node[6]-->node[2]: 8 2
+node[6]-->node[3]: 6
+node[6]-->node[4]: 4
+node[6]-->node[5]: 4
+node[6]-->node[6]: 0
+node[6]-->node[7]: 10
+node[6]-->node[8]: 8
+node[6]-->node[9]: 10
+node[6]-->node[10]: 8
+node[6]-->node[11]: 18
+node[7]-->node[0]: 14
+node[7]-->node[1]: 14
+node[7]-->node[2]: 12
+node[7]-->node[3]: 10
+node[7]-->node[4]: 14
+node[7]-->node[5]: 14
+node[7]-->node[6]: 10 0
+node[7]-->node[7]: 0
+node[7]-->node[8]: 18
+node[7]-->node[9]: 20
+node[7]-->node[10]: 16
+node[7]-->node[11]: 8
+node[8]-->node[0]: 16
+node[8]-->node[1]: 14
+node[8]-->node[2]: 14
+node[8]-->node[3]: 14
+node[8]-->node[4]: 8
+node[8]-->node[5]: 6
+node[8]-->node[6]: 8 node 8
+node[8]-->node[7]: 18
+node[8]-->node[8]: 0
+node[8]-->node[9]: 2
+node[8]-->node[10]: 4
+node[8]-->node[11]: 22
+node[9]-->node[0]: 18
+node[9]-->node[1]: 16
+node[9]-->node[2]: 16
+node[9]-->node[3]: 16
+node[9]-->node[4]: 10
+node[9]-->node[5]: 8
+node[9]-->node[6]: 10
+node[9]-->node[7]: 20
+node[9]-->node[8]: 2 node 9
+node[9]-->node[9]: 0
+node[9]-->node[10]: 4
+node[9]-->node[11]: 22
+node[10]-->node[0]: 20
+node[10]-->node[1]: 18
+node[10]-->node[2]: 16
+node[10]-->node[3]: 14
+node[10]-->node[4]: 12
+node[10]-->node[5]: 10
+node[10]-->node[6]: 8
+node[10]-->node[7]: 16
+node[10]-->node[8]: 4 2
+node[10]-->node[9]: 4
+node[10]-->node[10]: 0
+node[10]-->node[11]: 18
+node[11]-->node[0]: 22 0
+
+node[11]-->node[1]: 22
+node[11]-->node[2]: 20
+node[11]-->node[3]: 18
+node[11]-->node[4]: 22
+node[11]-->node[5]: 22
+node[11]-->node[6]: 18
+node[11]-->node[7]: 8
+node[11]-->node[8]: 22
+node[11]-->node[9]: 22
+node[11]-->node[10]: 18
+node[11]-->node[11]: 0

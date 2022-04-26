@@ -1,0 +1,48 @@
+threshold: 1 number of result: 9
+threshold: 2 number of result: 37
+threshold: 3 number of result: 61
+threshold: 4 number of result: 109
+threshold: 5 number of result: 196
+
+
+//bolzano threshold=1
+ tree1: 1 tree2: 0 ted: 1
+ tree1: 9 tree2: 7 ted: 1
+ tree1: 9 tree2: 6 ted: 1
+ tree1: 7 tree2: 6 ted: 1
+ tree1: 4 tree2: 2 ted: 1
+ tree1: 4 tree2: 1 ted: 1
+ tree1: 4 tree2: 0 ted: 1
+ tree1: 2 tree2: 1 ted: 1
+ tree1: 2 tree2: 0 ted: 1
+
+ tree1: 1 tree2: 0 ted: 2
+ tree1: 5 tree2: 4 ted: 3
+ tree1: 5 tree2: 3 ted: 6
+ tree1: 5 tree2: 2 ted: 6
+ tree1: 5 tree2: 1 ted: 6
+ tree1: 5 tree2: 0 ted: 5
+ tree1: 4 tree2: 3 ted: 4
+ tree1: 4 tree2: 2 ted: 5
+ tree1: 4 tree2: 1 ted: 6
+ tree1: 4 tree2: 0 ted: 4
+ tree1: 3 tree2: 2 ted: 7
+ tree1: 3 tree2: 1 ted: 7
+ tree1: 3 tree2: 0 ted: 5
+ tree1: 2 tree2: 1 ted: 6
+ tree1: 2 tree2: 0 ted: 4
+
+
+   t1  t2  t3  t4  t5  t6
+t1  0
+t2  2   0
+t3  4   6   0
+t4  5   7   7   0
+t5  4   6   5   4   0
+t6  5   6   6   6   3   0
+
+threshold: 1 tau valid mapping: 7     precandidate mapping: 6     conflicts: 0
+threshold: 2 tau valid mapping: 39    precandidate mapping: 21    conflicts: 1
+threshold: 3 tau valid mapping: 55    precandidate mapping: 30    conflicts: 1
+threshold: 4 tau valid mapping: 92    precandidate mapping: 48    conflicts: 5
+threshold: 5 tau valid mapping: 92    precandidate mapping: 48    conflicts: 5

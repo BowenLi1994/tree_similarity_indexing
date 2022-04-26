@@ -48,30 +48,23 @@ int main(int, char** argv) {
     auto end = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - begin);
 
-    // std::ofstream resultFile;
-    // std::string filepath="/home/bowen/tree_similarity_indexing/result/tjoin_result.txt";
-    // resultFile.open(filepath,std::ios_base::app);
+    //std::cout<<"threshold: "<<threshold<<" number of result: "<<join_result.size()<<std::endl;
+    //std::cout<<"threshold: "<<threshold<<" tau valid mapping: "<<ted_join_algorithm.tau_valid_mapping<<std::endl;
+    std::cout<<"threshold: "<<threshold<<" number of conflicts: "<<ted_join_algorithm.conflicts<<std::endl;
+    // for(auto r:join_result)
+    //     std::cout<<" tree1: "<<r.tree_id_1<<" tree2: "<<r.tree_id_2<<" ted: "<<r.ted_value<<std::endl;
 
-    // resultFile<<filename<<"+"<<threshold<<" : "<<duration.count()<<std::endl;
-    
-    // std::ofstream resultFile;
-    // std::string filepath="/home/bowen/tree_similarity_indexing/result/tjoin_candidates.txt";
-    // resultFile.open(filepath,std::ios_base::app);
-    // resultFile<<filename<<"+"<<threshold<<
-    // "  pre-candidates: "<<ted_join_algorithm.pre_candidates<<" candidates: "<<ted_join_algorithm.candidates_num
-    // <<" result: "<<ted_join_algorithm.result<<std::endl;
+    // for(auto s: sets_collection){
+    //     std::cout<<"tree size: "<<s.first<<std::endl;
 
-
-
-    std::ofstream resultFile;
-    std::string filepath="/home/bowen/tree_similarity_indexing/result/tjoin_comparation.txt";
-    resultFile.open(filepath,std::ios_base::app);
-    resultFile<<filename<<"+"<<threshold<<": "<<ted_join_algorithm.same_label_comparations<<std::endl;
-
-    //std::cout<<"result: "<<join_result.size()<<std::endl;
-    // for(auto i: join_result){
-    //     std::cout<<"pari: "<<i.tree_id_1<<"&"<<i.tree_id_2<<std::endl;
+    //     for(auto lset : s.second){
+    //         std::cout<<"label id: "<<lset.id<<" weight: "<<lset.weight<<" weight so far: "<<lset.weight_so_far<<std::endl;
+    //         for(auto sv: lset.struct_vect){
+    //             sv.
+    //         }
+    //     }
     // }
+
 
 
     return 0;

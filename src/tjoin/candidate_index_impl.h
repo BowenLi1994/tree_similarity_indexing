@@ -7,6 +7,7 @@ CandidateIndex::CandidateIndex() {
   pre_candidates_ = 0;
   il_lookups_ = 0;
   same_label_comparation=0;
+  conflicts=0;
 }
 
 void CandidateIndex::lookup(
@@ -29,8 +30,7 @@ void CandidateIndex::lookup(
     std::pair<int, std::vector<label_set_converter::LabelSetElement>>& r_pair = *r_it; // dereference iterator to current set once
     std::vector<label_set_converter::LabelSetElement> r = r_pair.second; // dereference iterator to current set once
     int r_id = r_it - sets_collection.begin(); // identifier for r (line number)
-    std::vector<int> M; // holds the set identifiers of the candidate pairs, 
-                                 // the overlap is stored in the set_data
+    std::vector<int> M; // holds the set identifiers of the candidate pairs, the overlap is stored in the set_data
     int r_size = sets_collection[r_id].first; // number of elements in r
 
 
@@ -51,9 +51,8 @@ void CandidateIndex::lookup(
       }
     }
 
-    // iterate through probing prefix elements and extend the candidate set
+    // iterate through probing prefix elements and extend the candidate set until tau + 1 nodes of the probing set are processed
     p = 0;
-    // until tau + 1 nodes of the probing set are processed
     //std::cout<<"probing the tau +1 nodes"<<std::endl;
     while(p < r.size()) {
       // remove all entries in the inverted list index up to the position where 
@@ -87,6 +86,7 @@ void CandidateIndex::lookup(
         if(tau_valid != 0 && set_data[set].overlap == 0) 
           M.push_back(set); // if not, add it to the candidate set M
         set_data[set].overlap += tau_valid;
+        tau_valid_mapping+=tau_valid;
         
       }
       // stop as soon as tau + 1 elements have been discovered
@@ -200,7 +200,7 @@ bool CandidateIndex::structural_filter(
       ++ps;
     }
   }
-
+  //tau_valid_mapping+=olap;
   return olap >= t;
 }
 
@@ -234,6 +234,7 @@ int CandidateIndex::structural_mapping(
       se = std::ref(sv_s);
       le = std::ref(sv_r);
     }
+    std::set<int> large_mapped;
     // std::cout<<"se weight: "<<se.get().weight<<std::endl;
     // std::cout<<"le weight: "<<le.get().weight<<std::endl;
     std::size_t pid_lower_bound_start = 0;
@@ -261,6 +262,9 @@ int CandidateIndex::structural_mapping(
            abs(right_hand_duplicate.number_nodes_descendant - left_hand_duplicate.number_nodes_descendant) <= distance_threshold) {
           ++same_label_comparation;
           ++tau_valid;
+          if(large_mapped.count(right_hand_duplicate.postorder_id))
+            conflicts++;
+          large_mapped.insert(right_hand_duplicate.postorder_id);
           break;
         }
       }

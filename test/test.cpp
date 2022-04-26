@@ -106,9 +106,9 @@ int structural_mapping(
     }  
  }
 for(size_t i=0;i<included.size();i++){
-    std::cout<<"node["<<i<<"]: ";
+    std::cout<<"node["<<i+1<<"]: ";
     for(auto node: included[i]){
-        std::cout<<node<<" ";
+        std::cout<<node+1<<" ";
     } 
     std::cout<<std::endl;
 }

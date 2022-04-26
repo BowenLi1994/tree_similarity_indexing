@@ -53,6 +53,8 @@ public:
   long int get_number_of_il_lookups() const;
 
   int same_label_comparation;
+  int tau_valid_mapping;
+  int conflicts;
 // Member variables.
 private:
   /// Number of precandidates.
